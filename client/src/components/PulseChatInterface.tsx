@@ -520,8 +520,6 @@ const PulseChatInterface = () => {
       </div>
       
       {/* Sticky Input Area */}
-      {/* Sticky Input Area */}
-      {/* Sticky Input Area */}
       <div className="p-4 border-t border-white/5 bg-black/60 backdrop-blur-xl relative z-20 shrink-0 mb-safe">
         {/* Image Preview */}
         {selectedImage && (
