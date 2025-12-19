@@ -76,8 +76,14 @@
     @apply border-border;
   }
 
+  html {
+    @apply h-full w-full overflow-x-hidden;
+    background-color: #0f0518;
+    /* Match bottom gradient color */
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground h-full w-full m-0 p-0 overflow-x-hidden;
     /* Global Mesh Gradient Background - Deep & Neon */
     background:
       radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.4) 0%, transparent 50%),
@@ -92,6 +98,11 @@
     /* Very Dark Purple Base */
     background-attachment: fixed;
     min-height: 100vh;
+  }
+
+  /* Ensure React Root is full height */
+  #root {
+    @apply h-full w-full;
   }
 }
 
