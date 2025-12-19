@@ -9,6 +9,8 @@ services:
     envVars:
       - key: PULSE_FITNESS_SERVER_PORT
         value: 10000
+      - key: NODE_ENV
+        value: production
       - key: PULSE_FITNESS_FRONTEND_URL
         value: https://pulse-fitness-one.vercel.app
       - key: GARMIN_MICROSERVICE_URL
@@ -45,8 +47,10 @@ services:
         generateValue: true
       - key: PULSE_FITNESS_API_ENCRYPTION_KEY
         generateValue: true
+      - key: PERPLEXITY_API_KEY
+        sync: false
       # Add other keys manually in dashboard: 
-      # PERPLEXITY_API_KEY, WITHINGS_CLIENT_ID, WITHINGS_CLIENT_SECRET, 
+      # WITHINGS_CLIENT_ID, WITHINGS_CLIENT_SECRET, 
       # GARMIN_USERNAME, GARMIN_PASSWORD, PULSE_FITNESS_ADMIN_EMAIL
 
   # Python Garmin Service

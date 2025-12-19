@@ -19,5 +19,5 @@ export const deleteMealPlanTemplate = async (userId: string, templateId: string)
 
 export const getMealDayPresets = async (userId: string): Promise<MealDayPreset[]> => {
     const response = await api.get(`/meal-plan-templates/presets?userId=${userId}`);
-    return response.data;
+    return Array.isArray(response) ? response : response.data || [];
 };

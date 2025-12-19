@@ -225,15 +225,18 @@ app.set("trust proxy", 1);
 
 app.use((req, res, next) => sessionMiddleware(req, res, next));
 
-// Dynamically set cookie properties based on protocol
+// Dynamically set cookie properties based on environment
 app.use((req, res, next) => {
-  if (req.session && req.protocol === "https") {
-    req.session.cookie.secure = true;
-    req.session.cookie.sameSite = "none";
-  } else if (req.session) {
-    req.session.cookie.sameSite = "lax";
+  if (req.session) {
+    const isProduction = process.env.NODE_ENV === 'production';
+    if (isProduction) {
+      req.session.cookie.secure = true;
+      req.session.cookie.sameSite = "none";
+    } else {
+      req.session.cookie.sameSite = "lax";
+      req.session.cookie.secure = false;
+    }
   }
-  // log('debug', `[Session Debug] Request Protocol: ${req.protocol}, Secure: ${req.secure}, Host: ${req.headers.host}`); // Commented out for less verbose logging
   next();
 });
 

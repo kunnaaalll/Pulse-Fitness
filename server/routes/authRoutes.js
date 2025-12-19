@@ -76,7 +76,7 @@ router.post('/login', loginValidation, async (req, res, next) => {
 
     res.cookie('token', authResult.token, {
       httpOnly: true,
-      secure: true, // Always true for cross-site access
+      secure: true,
       sameSite: 'none',
       maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
@@ -134,7 +134,11 @@ router.post('/logout', async (req, res, next) => {
     }
 
     res.clearCookie('sparky.sid');
-    res.clearCookie('token');
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none'
+    });
 
     // If OIDC user, return end_session_endpoint for frontend to redirect
     if (providerId) {
@@ -791,4 +795,4 @@ router.get('/magic-link-login', async (req, res, next) => {
 });
 
 
-module.exports = router;
+module.exports = router; 

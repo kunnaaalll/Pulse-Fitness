@@ -110,3 +110,11 @@ export interface FoodEntryMeal {
   iron?: number;
   glycemic_index?: string; // Aggregated glycemic index
 }
+
+export interface MealDayPreset {
+  id?: string;
+  user_id?: string;
+  preset_name: string;
+  description?: string;
+  assignments: MealPlanTemplateAssignment[];
+}
