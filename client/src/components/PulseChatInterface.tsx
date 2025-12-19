@@ -314,7 +314,6 @@ const PulseChatInterface = () => {
         switch (response.action) {
           case 'food_added':
           case 'exercise_added':
-          case 'measurement_added':
           case 'log_water':
           case 'water_added':
             botMessageContent = response.response || 'Entry logged successfully!';
