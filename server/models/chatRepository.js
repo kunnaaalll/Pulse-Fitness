@@ -56,6 +56,11 @@ async function upsertAiServiceSetting(settingData) {
 }
 
 async function getAiServiceSettingForBackend(id, userId) {
+  // If the ID is our special system default string, don't query the DB as it expects a UUID
+  if (id === 'system_default_perplexity') {
+    return null;
+  }
+
   const client = await getClient(userId); // User-specific operation
   try {
     const result = await client.query(
