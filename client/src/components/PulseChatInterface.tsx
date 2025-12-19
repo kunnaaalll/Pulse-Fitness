@@ -129,6 +129,7 @@ const PulseChatInterface = () => {
       // create a synthetic "System Default" setting to allow the UI to proceed.
       // The backend handles the actual "system_default_perplexity" logic.
       if (!setting) {
+        console.warn('No active AI service setting found from API. Using system default fallback.');
         setting = {
           id: 'system_default_perplexity',
           service_name: 'Pulse AI (System)',
@@ -144,7 +145,7 @@ const PulseChatInterface = () => {
     } catch (err) {
       console.error('Error loading active AI service setting:', err);
       // Even on error, set the default to allow the UI to attempt communication
-      setActiveAIServiceSetting({
+      const defaultSetting = {
           id: 'system_default_perplexity',
           service_name: 'Pulse AI (System)',
           service_type: 'perplexity',
@@ -152,13 +153,15 @@ const PulseChatInterface = () => {
           system_prompt: 'You are Pulse, an AI nutrition and wellness coach.',
           is_active: true,
           model_name: 'sonar-pro'
-        });
+        };
+      setActiveAIServiceSetting(defaultSetting);
       
-      toast({
-        title: "Using Default AI",
-        description: "Could not load custom settings. Switched to system default.",
-        variant: "default",
-      });
+      // Optional: Inform the user, but maybe less intrusively or just log it if we're successfully falling back
+      // toast({
+      //   title: "Using Default AI",
+      //   description: "Could not load custom settings. Switched to system default.",
+      //   variant: "default",
+      // });
     }
   };
 
