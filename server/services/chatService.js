@@ -188,7 +188,7 @@ async function processChatMessage(messages, serviceConfigId, authenticatedUserId
     let aiService;
     
     // Check for System Default override
-    // Check for System Default override
+
     if (serviceConfigId === 'system_default_perplexity') {
         if (process.env.PERPLEXITY_API_KEY) {
             aiService = {
