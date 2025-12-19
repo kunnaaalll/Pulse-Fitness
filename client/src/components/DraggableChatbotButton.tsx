@@ -5,11 +5,11 @@ import { useChatbotVisibility } from '@/contexts/ChatbotVisibilityContext';
 import { useAuth } from '@/hooks/useAuth';
 
 const DraggableChatbotButton: React.FC = () => {
-  const { toggleChat } = useChatbotVisibility();
+  const { toggleChat, isChatOpen } = useChatbotVisibility();
   const { user, loading } = useAuth(); // Destructure user and loading from useAuth
 
-  // Always show button if user is logged in
-  if (!user && !loading) {
+  // Always show button if user is logged in, but hide it if the chat window is already open
+  if ((!user && !loading) || isChatOpen) {
     return null; 
   }
 

@@ -53,7 +53,7 @@ const PulseChat = () => {
 
   return (
     <Sheet open={isChatOpen} onOpenChange={closeChat}>
-      <SheetContent side="right" className="w-full sm:w-[500px] p-0 border-l border-white/10 bg-black/40 backdrop-blur-2xl shadow-[0_0_50px_rgba(139,92,246,0.15)]">
+      <SheetContent side="right" className="w-full sm:w-[35vw] sm:min-w-[400px] sm:max-w-none p-0 border-l border-white/10 bg-black/40 backdrop-blur-2xl shadow-[0_0_50px_rgba(139,92,246,0.15)]">
         <div className="flex flex-col h-full">
           <SheetHeader className="p-6 border-b">
             <div className="flex items-center justify-between">
