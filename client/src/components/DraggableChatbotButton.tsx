@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { MessageSquare } from 'lucide-react';
 import { useChatbotVisibility } from '@/contexts/ChatbotVisibilityContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { getAIServices } from '@/services/aiServiceSettingsService';
 import { useAuth } from '@/hooks/useAuth';
 
 const DraggableChatbotButton: React.FC = () => {
@@ -11,7 +10,6 @@ const DraggableChatbotButton: React.FC = () => {
   const { user, loading } = useAuth(); // Destructure user and loading from useAuth
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
-  const [hasAiProvider, setHasAiProvider] = useState(false); // New state for AI provider check
   const hasDragged = useRef(false); // New ref to track if a drag occurred
   const dragOffset = useRef({ x: 0, y: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -19,36 +17,21 @@ const DraggableChatbotButton: React.FC = () => {
   const STORAGE_KEY = 'chatbot_button_position';
 
   useEffect(() => {
-    // Force a known visible position for debugging
-    setPosition({ x: 50, y: 50 });
-    // Commenting out local storage load for debugging
-    // const savedPosition = localStorage.getItem(STORAGE_KEY);
-    // if (savedPosition) {
-    //   setPosition(JSON.parse(savedPosition));
-    // } else {
-    //   setPosition({ x: window.innerWidth - 100, y: window.innerHeight - 100 });
-    // }
-  }, []);
-
-  useEffect(() => {
-    const checkAiProviders = async () => {
-      if (!loading && user?.id) { // Only fetch if not loading and user is available
-        try {
-          const services = await getAIServices();
-          setHasAiProvider(services && services.length > 0);
-        } catch (error: any) {
-          console.error("Failed to fetch AI services:", error);
-          // If 403 (unauthorized) or network error, we might still want to show the button 
-          // to let the user try to open it and handle the error/auth there.
-          // Or at least default to true so it doesn't disappear.
-          setHasAiProvider(true); 
-        }
-      } else if (!loading && !user) { // If loading is false and no user, ensure AI provider is false
-        setHasAiProvider(false);
+    // Set default position to bottom-right to avoid overlap with sidebar
+    const safeX = typeof window !== 'undefined' ? window.innerWidth - 100 : 50;
+    const safeY = typeof window !== 'undefined' ? window.innerHeight - 100 : 50;
+    setPosition({ x: safeX, y: safeY });
+    
+    // Attempt to load saved position
+    const savedPosition = localStorage.getItem(STORAGE_KEY);
+    if (savedPosition) {
+      try {
+        setPosition(JSON.parse(savedPosition));
+      } catch (e) {
+        // ignore error
       }
-    };
-    checkAiProviders();
-  }, [user?.id, loading]); // Depend on user.id and loading
+    }
+  }, []);
 
   const isMobile = useIsMobile();
 
@@ -166,12 +149,13 @@ const DraggableChatbotButton: React.FC = () => {
     };
   }, [isDragging, position, isMobile, updatePosition, handleTouchStart, handleTouchMove, handleTouchEnd]); // Re-run effect if dragging state, position, or mobile state changes
 
-  if (!hasAiProvider) {
-    return null; // Do not render the button if no AI provider is set up
+  // Always show button if user is logged in, forcing the UI to handle "no service" errors gracefully
+  if (!user && !loading) {
+    return null; 
   }
 
   return (
-      <div className="fixed z-50 rounded-full w-16 h-16 pointer-events-none" style={{ left: position.x, top: position.y }}>
+      <div className="fixed z-[100] rounded-full w-16 h-16 pointer-events-none" style={{ left: position.x, top: position.y }}>
           {/* Pulse Ring */}
           <div className="absolute inset-0 rounded-full bg-purple-500 animate-ping opacity-20 duration-1000"></div>
           {/* Main Button */}
