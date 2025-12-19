@@ -520,6 +520,7 @@ const PulseChatInterface = () => {
       </div>
       
       {/* Sticky Input Area */}
+      {/* Sticky Input Area */}
       <div className="p-4 border-t border-white/5 bg-black/60 backdrop-blur-xl relative z-20 shrink-0 mb-safe">
         {/* Image Preview */}
         {selectedImage && (
@@ -551,8 +552,7 @@ const PulseChatInterface = () => {
             />
             <label 
               htmlFor="image-upload" 
-              className="absolute left-3 bottom-0.5 transform -translate-y-1/2 z-10 cursor-pointer p-2 rounded-full hover:bg-white/10 transition-colors"
-              style={{ bottom: '26px' }} // Manually centering vertically relative to input height
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer p-2 rounded-full hover:bg-white/10 transition-colors"
             >
                 <div className="text-slate-400 hover:text-purple-400 transition-colors">
                   <ImageIcon className="h-5 w-5" />
@@ -565,7 +565,7 @@ const PulseChatInterface = () => {
               onKeyPress={handleKeyPress}
               placeholder="Ask Pulse Coach..."
               disabled={isLoading || !coachRef.current}
-              className="bg-zinc-900/50 border-white/10 hover:border-white/20 focus:border-purple-500/50 text-white placeholder:text-slate-500 rounded-2xl pl-12 pr-4 py-6 text-base shadow-inner transition-all w-full"
+              className="bg-zinc-900/50 border-white/10 hover:border-white/20 focus:border-purple-500/50 text-white placeholder:text-slate-500 rounded-2xl pl-14 pr-4 h-14 py-3 text-base shadow-inner transition-all w-full focus-visible:ring-1 focus-visible:ring-purple-500/50"
             />
           </div>
           
@@ -573,9 +573,9 @@ const PulseChatInterface = () => {
             onClick={handleSendMessage}
             disabled={isLoading || (!inputValue.trim() && !selectedImage) || !coachRef.current}
             size="icon"
-            className="h-12 w-12 shrink-0 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
+            className="h-14 w-14 shrink-0 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
           >
-            {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5 ml-0.5" />}
+            {isLoading ? <Loader2 className="h-6 w-6 animate-spin" /> : <Send className="h-6 w-6 ml-0.5" />}
           </Button>
         </div>
         {!coachRef.current && (
