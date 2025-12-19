@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Liquid Glass Palette - Deep Space/Neon Theme */
+    --background: 265 50% 5%;
+    /* Darker Deep Purple base */
+    --foreground: 210 40% 98%;
+
+    --card: 265 50% 5%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 265 50% 5%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Neon Accents - More Vibrant */
+    --primary: 270 100% 60%;
+    /* Electric Purple */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 190 100% 50%;
+    /* Electric Cyan */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 265 30% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 300 100% 50%;
+    /* Neon Magenta */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 270 50% 40%;
+    --input: 265 30% 20%;
+    --ring: 270 100% 60%;
+
+    --radius: 1.5rem;
+    /* More organic curves */
+
+    /* Glass Vars */
+    --glass-border: 255 255 255;
+    --glass-opacity: 0.1;
+    --glass-blur: 20px;
+  }
+
+  /* Force Dark Mode - Liquid Glass is inherently dark */
+  .dark {
+    --background: 265 50% 5%;
+    --foreground: 210 40% 98%;
+    --card: 265 50% 5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 265 50% 5%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 270 100% 60%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 190 100% 50%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 265 30% 15%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 300 100% 50%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 270 50% 40%;
+    --input: 265 30% 20%;
+    --ring: 270 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    /* Global Mesh Gradient Background - Deep & Neon */
+    background:
+      radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.4) 0%, transparent 50%),
+      /* Deep Purple Left */
+      radial-gradient(circle at 85% 30%, rgba(219, 39, 119, 0.25) 0%, transparent 50%),
+      /* Pink Top Right */
+      radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+      /* Violet Top Center */
+      radial-gradient(circle at 50% 100%, rgba(14, 165, 233, 0.25) 0%, transparent 50%),
+      /* Cyan Bottom */
+      linear-gradient(to bottom, #0f0518, #1a0b2e);
+    /* Very Dark Purple Base */
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+
+  /* The Core Glass Utility */
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl text-white;
+  }
+
+  /* Interactive Glass (Buttons, Cards) */
+  .glass-hover {
+    @apply hover:bg-white/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:border-white/30;
+  }
+
+  /* Neon Glow Text */
+  .text-glow {
+    text-shadow: 0 0 10px currentColor;
+  }
+
+  /* Scrollbar Customization for Glass Theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/20 rounded-full hover:bg-white/40 backdrop-blur-sm transition-colors;
+  }
+}

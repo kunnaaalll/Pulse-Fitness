@@ -1,0 +1,68 @@
+services:
+  # Node.js Server
+  - type: web
+    name: pulsefitness-server
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && node SparkyFitnessServer.js
+    envVars:
+      - key: SPARKY_FITNESS_SERVER_PORT
+        value: 10000
+      - key: SPARKY_FITNESS_FRONTEND_URL
+        sync: false # Set in dashboard to your Vercel URL
+      - key: GARMIN_MICROSERVICE_URL
+        fromService:
+          type: web
+          name: pulsefitness-garmin
+          property: url
+      - key: SPARKY_FITNESS_DB_HOST
+        fromDatabase:
+          name: pulse-db
+          property: host
+      - key: SPARKY_FITNESS_DB_PORT
+        fromDatabase:
+          name: pulse-db
+          property: port
+      - key: SPARKY_FITNESS_DB_NAME
+        fromDatabase:
+          name: pulse-db
+          property: database
+      - key: SPARKY_FITNESS_DB_USER
+        fromDatabase:
+          name: pulse-db
+          property: user
+      - key: SPARKY_FITNESS_DB_PASSWORD
+        fromDatabase:
+          name: pulse-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SPARKY_FITNESS_API_ENCRYPTION_KEY
+        generateValue: true
+      # Add other keys manually in dashboard: 
+      # PERPLEXITY_API_KEY, WITHINGS_CLIENT_ID, WITHINGS_CLIENT_SECRET, 
+      # GARMIN_USERNAME, GARMIN_PASSWORD, SPARKY_FITNESS_ADMIN_EMAIL
+
+  # Python Garmin Service
+  - type: web
+    name: pulsefitness-garmin
+    env: python
+    plan: free
+    buildCommand: cd services/garmin && pip install -r requirements.txt
+    startCommand: cd services/garmin && uvicorn main:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: GARMIN_SERVICE_PORT
+        value: 10000
+      - key: GARMIN_DATA_SOURCE
+        value: garmin
+
+databases:
+  - name: pulse-db
+    plan: free
+    databaseName: pulse_db
+    user: pulse_user
+
+version: "1"
