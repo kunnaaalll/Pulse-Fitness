@@ -33,6 +33,14 @@ services:
         fromDatabase:
           name: pulse-db
           property: password
+      - key: PULSE_FITNESS_APP_DB_USER
+        fromDatabase:
+          name: pulse-db
+          property: user
+      - key: PULSE_FITNESS_APP_DB_PASSWORD
+        fromDatabase:
+          name: pulse-db
+          property: password
       - key: JWT_SECRET
         generateValue: true
       - key: PULSE_FITNESS_API_ENCRYPTION_KEY
