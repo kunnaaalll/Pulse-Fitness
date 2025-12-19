@@ -14,7 +14,9 @@ const PulseChat = () => {
   const [hasEnabledServices, setHasEnabledServices] = useState(false); // Keep this state
 
   const checkEnabledServices = useCallback(async () => {
-    if (loading) { // Do not proceed if authentication is still loading
+
+    // Prevent API calls if loading or if user is not logged in
+    if (loading || !user) { 
       setHasEnabledServices(false);
       return;
     }
