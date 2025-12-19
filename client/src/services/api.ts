@@ -11,7 +11,9 @@ interface ApiCallOptions extends RequestInit {
   responseType?: 'json' | 'text' | 'blob'; // Add responseType option
 }
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+// Force relative path on Vercel to ensure Proxy is used, regardless of Env Var
+const isVercel = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
+export const API_BASE_URL = isVercel ? '/api' : (import.meta.env.VITE_API_URL || "/api");
 //export const API_BASE_URL = 'http://192.168.1.111:3010';
 
 export async function apiCall(endpoint: string, options?: ApiCallOptions): Promise<any> {
