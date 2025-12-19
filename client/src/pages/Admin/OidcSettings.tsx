@@ -297,7 +297,7 @@ const ProviderDialog: React.FC<{ provider: OidcProvider; onSave: (provider: Oidc
               </div>
             </div>
             <div className="text-sm text-muted-foreground mt-4">
-              <p>{t('admin.oidcSettings.redirectUriInfo', 'The Redirect URI for your OIDC provider should be: SPARKY_FITNESS_FRONTEND_URL/oidc-callback')}</p>
+              <p>{t('admin.oidcSettings.redirectUriInfo', 'The Redirect URI for your OIDC provider should be: PULSE_FITNESS_FRONTEND_URL/oidc-callback')}</p>
               <div className="flex items-center">
                 <code className="font-mono bg-gray-100 p-1 rounded">{`${window.location.origin}/oidc-callback`}</code>
                 <Button

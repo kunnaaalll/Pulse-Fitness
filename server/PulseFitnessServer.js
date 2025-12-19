@@ -62,16 +62,16 @@ const withingsService = require('./integrations/withings/withingsService'); // I
 const garminConnectService = require('./integrations/garminconnect/garminConnectService'); // Import garminConnectService
 
 const app = express();
-const PORT = process.env.SPARKY_FITNESS_SERVER_PORT || 3010;
+const PORT = process.env.PULSE_FITNESS_SERVER_PORT || 3010;
 
 console.log(
-  `DEBUG: SPARKY_FITNESS_FRONTEND_URL is: ${process.env.SPARKY_FITNESS_FRONTEND_URL}`
+  `DEBUG: PULSE_FITNESS_FRONTEND_URL is: ${process.env.PULSE_FITNESS_FRONTEND_URL}`
 );
 
 // Use cors middleware to allow requests from your frontend
 app.use(
   cors({
-    origin: process.env.SPARKY_FITNESS_FRONTEND_URL || "http://localhost:8080",
+    origin: process.env.PULSE_FITNESS_FRONTEND_URL || "http://localhost:8080",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: [
       "Content-Type",
@@ -101,7 +101,7 @@ app.use((req, res, next) => {
 // If the file is not found, it will fall through to the next middleware,
 // which will handle on-demand downloading.
 const UPLOADS_BASE_DIR = path.join(__dirname, "uploads");
-console.log("SparkyFitnessServer UPLOADS_BASE_DIR:", UPLOADS_BASE_DIR);
+console.log("PulseFitnessServer UPLOADS_BASE_DIR:", UPLOADS_BASE_DIR);
 app.use("/uploads", express.static(UPLOADS_BASE_DIR));
 
 // On-demand image serving route
@@ -143,7 +143,7 @@ app.get(
       );
       log(
         "debug",
-        `[SparkyFitnessServer] Original relative image path from DB: ${originalRelativeImagePath}`
+        `[PulseFitnessServer] Original relative image path from DB: ${originalRelativeImagePath}`
       );
 
       if (!originalRelativeImagePath) {
@@ -159,7 +159,7 @@ app.get(
         );
         log(
           "debug",
-          `[SparkyFitnessServer] External image URL constructed: ${externalImageUrl}`
+          `[PulseFitnessServer] External image URL constructed: ${externalImageUrl}`
         );
       } else {
         // Handle other sources here if needed
@@ -202,7 +202,7 @@ const configureSessionMiddleware = (pool) => {
       pool: pool, // Connection pool
       tableName: "session", // Use a table named 'session'
     }),
-    name: "sparky.sid",
+    name: "pulse.sid",
     secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: true,
@@ -474,25 +474,25 @@ applyMigrations()
   scheduleGarminSyncs();
 
   // Set admin user from environment variable if provided
-  if (process.env.SPARKY_FITNESS_ADMIN_EMAIL) {
+  if (process.env.PULSE_FITNESS_ADMIN_EMAIL) {
     const userRepository = require('./models/userRepository');
-    const adminUser = await userRepository.findUserByEmail(process.env.SPARKY_FITNESS_ADMIN_EMAIL);
+    const adminUser = await userRepository.findUserByEmail(process.env.PULSE_FITNESS_ADMIN_EMAIL);
     if (adminUser && adminUser.id) {
       const success = await userRepository.updateUserRole(adminUser.id, 'admin');
       if (success) {
-        log('info', `User ${process.env.SPARKY_FITNESS_ADMIN_EMAIL} set as admin.`);
+        log('info', `User ${process.env.PULSE_FITNESS_ADMIN_EMAIL} set as admin.`);
       } else {
         log(
           "warn",
-          `Admin user with email ${process.env.SPARKY_FITNESS_ADMIN_EMAIL} not found.`
+          `Admin user with email ${process.env.PULSE_FITNESS_ADMIN_EMAIL} not found.`
         );
       }
     }
-  } // Closing the if block for SPARKY_FITNESS_ADMIN_EMAIL
+  } // Closing the if block for PULSE_FITNESS_ADMIN_EMAIL
 
   app.listen(PORT, () => {
     console.log(`DEBUG: Server started and listening on port ${PORT}`); // Direct console log
-    log("info", `SparkyFitnessServer listening on port ${PORT}`);
+    log("info", `PulseFitnessServer listening on port ${PORT}`);
   });
 })
   .catch((error) => {

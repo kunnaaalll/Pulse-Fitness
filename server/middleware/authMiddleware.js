@@ -114,9 +114,9 @@ const isAdmin = async (req, res, next) => {
 
   try {
     // Prioritize environment variable for super-admin check
-    if (process.env.SPARKY_FITNESS_ADMIN_EMAIL) {
+    if (process.env.PULSE_FITNESS_ADMIN_EMAIL) {
       const user = await userRepository.findUserById(req.userId);
-      if (user && user.email === process.env.SPARKY_FITNESS_ADMIN_EMAIL) {
+      if (user && user.email === process.env.PULSE_FITNESS_ADMIN_EMAIL) {
         log("debug", `Admin Check: Super-admin ${user.email} granted access.`);
         return next();
       }

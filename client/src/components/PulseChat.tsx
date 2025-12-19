@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle, Trash2 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { useAuth } from '@/hooks/useAuth';
-import SparkyChatInterface from './SparkyChatInterface';
+import PulseChatInterface from './PulseChatInterface';
 import { useChatbotVisibility } from '@/contexts/ChatbotVisibilityContext';
 import { getAIServices } from '@/services/aiServiceSettingsService';
 
-const SparkyChat = () => {
+const PulseChat = () => {
   const { user, loading } = useAuth(); // Get loading state from useAuth
   const { isChatOpen, closeChat } = useChatbotVisibility();
   const [hasEnabledServices, setHasEnabledServices] = useState(false); // Keep this state
@@ -54,7 +54,7 @@ const SparkyChat = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => {
-                  // This will be handled by the SparkyChatInterface component
+                  // This will be handled by the PulseChatInterface component
                   // We just need to trigger the action
                   const event = new CustomEvent('clearChatHistory');
                   window.dispatchEvent(event);
@@ -69,7 +69,7 @@ const SparkyChat = () => {
           </SheetHeader>
           
           <div className="flex-1 overflow-hidden">
-            <SparkyChatInterface />
+            <PulseChatInterface />
           </div>
         </div>
       </SheetContent>
@@ -77,4 +77,4 @@ const SparkyChat = () => {
   );
 };
 
-export default SparkyChat;
+export default PulseChat;

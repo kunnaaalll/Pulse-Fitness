@@ -274,7 +274,7 @@ const Auth = () => {
             <CardHeader className="text-center">
               <div className="flex items-center justify-center mb-4">
                 <img
-                  src="/images/SparkyFitness.png"
+                  src="/images/PulseFitness.png"
                   alt="Pulse Fitness Logo"
                   className="h-10 w-10 mr-2"
                 />

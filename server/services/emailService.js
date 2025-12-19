@@ -14,12 +14,12 @@ const { log } = require('../config/logging');
 
 // Example using SMTP:
 const transporter = nodemailer.createTransport({
-  host: process.env.SPARKY_FITNESS_EMAIL_HOST, // e.g., 'smtp.sendgrid.net'
-  port: process.env.SPARKY_FITNESS_EMAIL_PORT, // e.g., 587 or 465
-  secure: process.env.SPARKY_FITNESS_EMAIL_SECURE === 'true', // true for 465, false for other ports
+  host: process.env.PULSE_FITNESS_EMAIL_HOST, // e.g., 'smtp.sendgrid.net'
+  port: process.env.PULSE_FITNESS_EMAIL_PORT, // e.g., 587 or 465
+  secure: process.env.PULSE_FITNESS_EMAIL_SECURE === 'true', // true for 465, false for other ports
   auth: {
-    user: process.env.SPARKY_FITNESS_EMAIL_USER, // Your SMTP username
-    pass: process.env.SPARKY_FITNESS_EMAIL_PASS, // Your SMTP password
+    user: process.env.PULSE_FITNESS_EMAIL_USER, // Your SMTP username
+    pass: process.env.PULSE_FITNESS_EMAIL_PASS, // Your SMTP password
   },
 });
 
@@ -50,7 +50,7 @@ async function sendPasswordResetEmail(toEmail, resetUrl) {
 
   try {
     await transporter.sendMail({
-      from: process.env.SPARKY_FITNESS_EMAIL_FROM || 'noreply@sparkyfitness.com', // Your sender email address
+      from: process.env.PULSE_FITNESS_EMAIL_FROM || 'noreply@pulsefitness.com', // Your sender email address
       to: toEmail,
       subject: 'SparkyFitness Password Reset',
       html: `
@@ -106,7 +106,7 @@ async function sendEmailMfaCode(toEmail, code) {
 
   try {
     await transporter.sendMail({
-      from: process.env.SPARKY_FITNESS_EMAIL_FROM || 'noreply@sparkyfitness.com',
+      from: process.env.PULSE_FITNESS_EMAIL_FROM || 'noreply@pulsefitness.com',
       to: toEmail,
       subject: 'Your SparkyFitness MFA Code',
       html: `
@@ -156,7 +156,7 @@ async function sendMagicLinkEmail(toEmail, magicLinkUrl) {
 
   try {
     await transporter.sendMail({
-      from: process.env.SPARKY_FITNESS_EMAIL_FROM || 'noreply@sparkyfitness.com',
+      from: process.env.PULSE_FITNESS_EMAIL_FROM || 'noreply@pulsefitness.com',
       to: toEmail,
       subject: 'Your SparkyFitness Login Link',
       html: `

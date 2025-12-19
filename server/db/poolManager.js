@@ -9,11 +9,11 @@ let appPoolInstance = null;
 
 function createOwnerPoolInstance() {
   const newPool = new Pool({
-    user: process.env.SPARKY_FITNESS_DB_USER,
-    host: process.env.SPARKY_FITNESS_DB_HOST,
-    database: process.env.SPARKY_FITNESS_DB_NAME,
-    password: process.env.SPARKY_FITNESS_DB_PASSWORD,
-    port: process.env.SPARKY_FITNESS_DB_PORT || 5432,
+    user: process.env.PULSE_FITNESS_DB_USER,
+    host: process.env.PULSE_FITNESS_DB_HOST,
+    database: process.env.PULSE_FITNESS_DB_NAME,
+    password: process.env.PULSE_FITNESS_DB_PASSWORD,
+    port: process.env.PULSE_FITNESS_DB_PORT || 5432,
   });
 
   newPool.on('error', (err, client) => {
@@ -26,11 +26,11 @@ function createOwnerPoolInstance() {
 
 function createAppPoolInstance() {
   const newPool = new Pool({
-    user: process.env.SPARKY_FITNESS_APP_DB_USER,
-    host: process.env.SPARKY_FITNESS_DB_HOST,
-    database: process.env.SPARKY_FITNESS_DB_NAME,
-    password: process.env.SPARKY_FITNESS_APP_DB_PASSWORD,
-    port: process.env.SPARKY_FITNESS_DB_PORT,
+    user: process.env.PULSE_FITNESS_APP_DB_USER,
+    host: process.env.PULSE_FITNESS_DB_HOST,
+    database: process.env.PULSE_FITNESS_DB_NAME,
+    password: process.env.PULSE_FITNESS_APP_DB_PASSWORD,
+    port: process.env.PULSE_FITNESS_DB_PORT,
   });
 
   newPool.on('error', (err, client) => {

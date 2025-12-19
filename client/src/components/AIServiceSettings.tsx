@@ -780,7 +780,7 @@ const AIServiceSettings = () => {
             <div className="text-center py-8 text-muted-foreground">
               <Bot className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p>No AI services configured yet.</p>
-              <p className="text-sm">Add your first AI service to get started with Sparky.</p>
+              <p className="text-sm">Add your first AI service to get started with Pulse.</p>
             </div>
           )}
         </CardContent>

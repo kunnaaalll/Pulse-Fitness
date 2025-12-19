@@ -9,11 +9,11 @@ import { toast } from "sonner";
 
 import { apiCall } from "@/services/api";
 
-interface SparkyHistoryManagerProps {
+interface PulseHistoryManagerProps {
   onClose: () => void;
 }
 
-const SparkyHistoryManager = ({ onClose }: SparkyHistoryManagerProps) => {
+const PulseHistoryManager = ({ onClose }: PulseHistoryManagerProps) => {
   const { user } = useAuth();
   const [clearPreference, setClearPreference] = useState<string>('never');
   const [loading, setLoading] = useState(false);
@@ -48,9 +48,12 @@ const SparkyHistoryManager = ({ onClose }: SparkyHistoryManagerProps) => {
     setLoading(true);
     let error = null;
     try {
-      await apiCall('/user-preferences', 'POST', {
-        user_id: user.id,
-        auto_clear_history: clearPreference
+      await apiCall('/user-preferences', {
+        method: 'POST',
+        body: {
+          user_id: user.id,
+          auto_clear_history: clearPreference
+        }
       });
     } catch (err: any) {
       error = err;
@@ -73,7 +76,7 @@ const SparkyHistoryManager = ({ onClose }: SparkyHistoryManagerProps) => {
     setLoading(true);
     let error = null;
     try {
-      await apiCall(`/sparky-chat-history/${user.id}`, { method: 'DELETE' });
+      await apiCall(`/pulse-chat-history/${user.id}`, { method: 'DELETE' });
     } catch (err: any) {
       error = err;
     }
@@ -123,4 +126,4 @@ const SparkyHistoryManager = ({ onClose }: SparkyHistoryManagerProps) => {
   );
 };
 
-export default SparkyHistoryManager;
+export default PulseHistoryManager;

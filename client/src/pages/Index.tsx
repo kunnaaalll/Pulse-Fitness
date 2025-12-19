@@ -1,4 +1,4 @@
-import SparkyChat from "@/components/SparkyChat";
+import PulseChat from "@/components/PulseChat";
 import { usePreferences } from "@/contexts/PreferencesContext";
 import { debug, info, warn, error } from "@/utils/logging";
 import { apiCall } from "@/services/api";
@@ -343,8 +343,8 @@ const Index: React.FC<IndexProps> = ({ onShowAboutDialog }) => {
         <div className="flex justify-between items-center mb-6 glass p-4 rounded-2xl animate-in fade-in slide-in-from-top-4 duration-700">
           <div className="flex items-center gap-2"> 
             <img
-              src="/images/SparkyFitness.png"
-              alt="SparkyFitness Logo"
+              src="/images/PulseFitness.png"
+              alt="PulseFitness Logo"
               className="h-10 w-auto drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"
             />
             <h1 className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
@@ -462,7 +462,7 @@ const Index: React.FC<IndexProps> = ({ onShowAboutDialog }) => {
           </div>
         </Tabs>
 
-        <SparkyChat />
+        <PulseChat />
       </div>
 
       <AddComp

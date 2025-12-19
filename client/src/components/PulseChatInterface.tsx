@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, Loader2, ImageIcon, X } from 'lucide-react';
 import { toast } from "@/hooks/use-toast";
 import DOMPurify from 'dompurify';
-import SparkyNutritionCoach from './SparkyNutritionCoach';
+import PulseNutritionCoach from './PulseNutritionCoach';
 import { usePreferences } from '@/contexts/PreferencesContext'; // Import usePreferences
 import { debug, info, warn, error } from '@/utils/logging'; // Import logging utilities
 import {
@@ -17,11 +17,11 @@ import {
   getTodaysNutrition,
   Message,
   UserPreferences,
-} from '@/services/sparkyChatService';
+} from '@/services/pulseChatService';
 import { getActiveAiServiceSetting, AIService } from '@/services/aiServiceSettingsService';
 
 
-const SparkyChatInterface = () => {
+const PulseChatInterface = () => {
   const { formatDateInUserTimezone } = usePreferences(); // Get timezone and formatter from context
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -84,7 +84,7 @@ const SparkyChatInterface = () => {
             description: "Your chat history has been cleared.",
           });
         } catch (error) {
-          console.error('SparkyChatInterface: Error clearing chat history:', error);
+          console.error('PulseChatInterface: Error clearing chat history:', error);
            toast({
             title: "Error",
             description: "Failed to clear chat history.",
@@ -151,7 +151,7 @@ const SparkyChatInterface = () => {
         if (nutritionData && nutritionData.analysis) {
           const welcomeMessage: Message = {
             id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-            content: `👋 **Hi there! I'm Sparky, your AI nutrition coach!**\n\n${nutritionData.analysis}\n\n💡 **Tips for today:**\n${nutritionData.tips}\n\n🗣️ Ask me about nutrition, exercise, or healthy lifestyle tips! I can help you:\n• Understand your nutrition data\n• Suggest meal improvements\n• Provide exercise recommendations\n• Give wellness advice\n• Track food and workouts`,
+            content: `👋 **Hi there! I'm Pulse, your AI nutrition coach!**\n\n${nutritionData.analysis}\n\n💡 **Tips for today:**\n${nutritionData.tips}\n\n🗣️ Ask me about nutrition, exercise, or healthy lifestyle tips! I can help you:\n• Understand your nutrition data\n• Suggest meal improvements\n• Provide exercise recommendations\n• Give wellness advice\n• Track food and workouts`,
             isUser: false,
             timestamp: new Date()
           };
@@ -159,7 +159,7 @@ const SparkyChatInterface = () => {
         } else {
           const defaultMessage: Message = {
             id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-            content: '👋 **Hi! I\'m Sparky, your AI nutrition coach!**\n\n🍎 I can help you with nutrition advice and healthy living tips\n🏃‍♂️ Ask me about exercise recommendations\n📊 Get insights about your eating habits\n💡 Receive personalized wellness guidance\n\n💬 Try asking: "What should I eat for a healthy breakfast?" or "How can I increase my protein intake?"',
+            content: '👋 **Hi! I\'m Pulse, your AI nutrition coach!**\n\n🍎 I can help you with nutrition advice and healthy living tips\n🏃‍♂️ Ask me about exercise recommendations\n📊 Get insights about your eating habits\n💡 Receive personalized wellness guidance\n\n💬 Try asking: "What should I eat for a healthy breakfast?" or "How can I increase my protein intake?"',
             isUser: false,
             timestamp: new Date()
           };
@@ -169,12 +169,12 @@ const SparkyChatInterface = () => {
         // If messages were loaded from history, do not add a welcome message.
       }
     } catch (error) {
-      console.error('SparkyChatInterface: Error initializing chat:', error);
+      console.error('PulseChatInterface: Error initializing chat:', error);
       // Only add error message if no messages exist after loading history
       if (messages.length === 0) { // Check if messages state is empty after loading history
         const errorMessage: Message = {
           id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-          content: '👋 **Hi! I\'m Sparky, your nutrition coach!**\n\n🥗 Ask me about nutrition and healthy eating\n💪 Get exercise and wellness tips\n📈 Learn about balanced nutrition\n\nI\'m here to help you achieve your health goals!',
+          content: '👋 **Hi! I\'m Pulse, your nutrition coach!**\n\n🥗 Ask me about nutrition and healthy eating\n💪 Get exercise and wellness tips\n📈 Learn about balanced nutrition\n\nI\'m here to help you achieve your health goals!',
           isUser: false,
           timestamp: new Date()
         };
@@ -340,7 +340,7 @@ const SparkyChatInterface = () => {
                   setMessages(prev => [...prev, updateMessage]);
                 }
               } catch (error) {
-                console.error('SparkyChatInterface: Error refreshing data after logging:', error);
+                console.error('PulseChatInterface: Error refreshing data after logging:', error);
               }
             }, 1000);
             break;
@@ -445,7 +445,7 @@ const SparkyChatInterface = () => {
     <div className="flex flex-col h-full relative overflow-hidden bg-transparent">
        {/* Background glow effect - Subtle */}
       
-      <SparkyNutritionCoach
+      <PulseNutritionCoach
         ref={coachRef}
         userLoggingLevel={userPreferences?.logging_level || 'ERROR'}
         formatDateInUserTimezone={formatDateInUserTimezone}
@@ -477,7 +477,7 @@ const SparkyChatInterface = () => {
             </div>
           ))}
           {isLoading && (
-            <div className="flex justify-start animate-pulse" key="sparky-chat-loading-spinner">
+            <div className="flex justify-start animate-pulse" key="pulse-chat-loading-spinner">
               <div className="bg-zinc-800 border border-white/10 rounded-2xl p-4 flex items-center gap-3 shadow-inner">
                 <Loader2 className="h-5 w-5 animate-spin text-purple-400" />
                 <span className="text-sm font-medium text-slate-300">Coach is thinking...</span>
@@ -559,4 +559,4 @@ const SparkyChatInterface = () => {
   );
 };
 
-export default SparkyChatInterface;
+export default PulseChatInterface;

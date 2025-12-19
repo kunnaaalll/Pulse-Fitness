@@ -17,7 +17,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt'); // Using bcrypt as per package.json
 
 // Set env vars for encryption module
-process.env.SPARKY_FITNESS_API_ENCRYPTION_KEY = process.env.SPARKY_FITNESS_API_ENCRYPTION_KEY || 'your_encryption_key_here';
+process.env.PULSE_FITNESS_API_ENCRYPTION_KEY = process.env.PULSE_FITNESS_API_ENCRYPTION_KEY || 'your_encryption_key_here';
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_here';
 
 const { encrypt, ENCRYPTION_KEY } = require('../security/encryption');

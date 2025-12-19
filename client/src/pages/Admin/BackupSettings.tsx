@@ -16,7 +16,7 @@ const BackupSettings: React.FC = () => {
   const [backupTime, setBackupTime] = useState<string>('02:00');
   const [retentionDays, setRetentionDays] = useState<number>(7);
   const [lastBackupStatus, setLastBackupStatus] = useState('');
-  const [backupLocation, setBackupLocation] = useState('/app/SparkyFitnessServer/backup'); // Default from backend
+  const [backupLocation, setBackupLocation] = useState('/app/PulseFitnessServer/backup'); // Default from backend
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -45,7 +45,7 @@ const BackupSettings: React.FC = () => {
       } else {
         setLastBackupStatus(data.lastBackupStatus || 'N/A');
       }
-      setBackupLocation(data.backupLocation || '/app/SparkyFitnessServer/backup'); // Use fetched or default
+      setBackupLocation(data.backupLocation || '/app/PulseFitnessServer/backup'); // Use fetched or default
     } catch (error) {
       toast({
         title: t('admin.backupSettings.error', 'Error'),

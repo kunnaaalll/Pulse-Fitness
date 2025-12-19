@@ -282,7 +282,7 @@ export const PreferencesProvider: React.FC<{ children: React.ReactNode }> = ({ c
         default_weight_unit: 'kg',
         default_measurement_unit: 'cm',
         default_distance_unit: 'km', // Add default distance unit
-        system_prompt: 'You are Sparky, a helpful AI assistant for health and fitness tracking. Be friendly, encouraging, and provide accurate information about nutrition, exercise, and wellness.',
+        system_prompt: 'You are Pulse, a helpful AI assistant for health and fitness tracking. Be friendly, encouraging, and provide accurate information about nutrition, exercise, and wellness.',
         auto_clear_history: 'never',
         logging_level: 'ERROR' as 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'SILENT', // Add default logging level with type assertion
         default_food_data_provider_id: null, // Default to no specific food data provider

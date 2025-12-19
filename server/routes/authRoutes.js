@@ -142,7 +142,7 @@ router.post('/logout', async (req, res, next) => {
         const provider = await oidcProviderRepository.getOidcProviderById(providerId);
 
         if (provider && provider.end_session_endpoint) {
-          const frontendUrl = process.env.SPARKY_FITNESS_FRONTEND_URL || 'http://localhost:3000'; // Fallback for development
+          const frontendUrl = process.env.PULSE_FITNESS_FRONTEND_URL || 'http://localhost:3000'; // Fallback for development
           const endSessionUrl = `${provider.end_session_endpoint}?post_logout_redirect_uri=${frontendUrl}/`;
           return res.status(200).json({
             message: 'Logout successful.',
@@ -164,7 +164,7 @@ router.post('/logout', async (req, res, next) => {
 
 // Authentication Endpoints
 router.post('/register', registerValidation, async (req, res, next) => {
-  if (process.env.SPARKY_FITNESS_DISABLE_SIGNUP === 'true') {
+  if (process.env.PULSE_FITNESS_DISABLE_SIGNUP === 'true') {
     return res.status(403).json({ error: 'New user registration is currently disabled.' });
   }
   const errors = validationResult(req);

@@ -97,7 +97,7 @@ interface NutritionData {
   serving_unit: string;
 }
 
-class SparkyAIService {
+class PulseAIService {
   private energyUnit: 'kcal' | 'kJ' = 'kcal'; // Default
   private convertEnergy: (value: number, fromUnit: 'kcal' | 'kJ', toUnit: 'kcal' | 'kJ') => number = (val) => val; // Default passthrough
   private getEnergyUnitString: (unit: 'kcal' | 'kJ') => string = (unit) => unit === 'kcal' ? 'kcal' : 'kJ'; // Default fallback
@@ -451,7 +451,7 @@ class SparkyAIService {
           });
         } else {
           // Food not found in local knowledge base.
-          // The AI call for unknown foods will be handled by SparkyNutritionCoach.
+          // The AI call for unknown foods will be handled by PulseNutritionCoach.
           // For now, add a basic fallback.
           nutritionData.push(this.getBasicFoodNutrition(food.name, food.quantity, food.unit));
         }
@@ -988,4 +988,4 @@ class SparkyAIService {
 
 }
 
-export default SparkyAIService;
+export default PulseAIService;

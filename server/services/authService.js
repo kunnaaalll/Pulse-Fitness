@@ -378,11 +378,11 @@ async function deleteFamilyAccessEntry(authenticatedUserId, id) {
 async function getLoginSettings() {
     try {
         const globalSettings = await globalSettingsRepository.getGlobalSettings();
-        const forceEmailLogin = process.env.SPARKY_FITNESS_FORCE_EMAIL_LOGIN === 'true';
+        const forceEmailLogin = process.env.PULSE_FITNESS_FORCE_EMAIL_LOGIN === 'true';
 
         let emailEnabled = globalSettings ? globalSettings.enable_email_password_login : true;
         if (forceEmailLogin) {
-            log('warn', 'SPARKY_FITNESS_FORCE_EMAIL_LOGIN is set, forcing email/password login to be enabled.');
+            log('warn', 'PULSE_FITNESS_FORCE_EMAIL_LOGIN is set, forcing email/password login to be enabled.');
             emailEnabled = true;
         }
 
@@ -481,7 +481,7 @@ async function forgotPassword(email) {
       passwordResetExpires
     );
 
-    const resetUrl = `${process.env.SPARKY_FITNESS_FRONTEND_URL}/reset-password?token=${resetToken}`;
+    const resetUrl = `${process.env.PULSE_FITNESS_FRONTEND_URL}/reset-password?token=${resetToken}`;
     await emailService.sendPasswordResetEmail(user.email, resetUrl);
 
     log(
@@ -594,7 +594,7 @@ async function logAdminAction(adminUserId, targetUserId, actionType, details) {
 async function generateTotpSecret(userId, email) {
   try {
     const totp = new TOTP({
-      issuer: "SparkyFitness",
+      issuer: "PulseFitness",
       label: email,
       algorithm: "SHA1",
       digits: 6,
@@ -626,7 +626,7 @@ async function verifyTotpCode(userId, code) {
     }
 
     const totp = new TOTP({
-      issuer: "SparkyFitness",
+      issuer: "PulseFitness",
       label: user.email,
       algorithm: "SHA1",
       digits: 6,
@@ -784,7 +784,7 @@ async function requestMagicLink(email) {
 
     await userRepository.storeMagicLinkToken(user.id, token, expires);
 
-    const magicLinkUrl = `${process.env.SPARKY_FITNESS_FRONTEND_URL}/login/magic-link?token=${token}`;
+    const magicLinkUrl = `${process.env.PULSE_FITNESS_FRONTEND_URL}/login/magic-link?token=${token}`;
     await emailService.sendMagicLinkEmail(user.email, magicLinkUrl);
 
     log("info", `Magic link sent to user: ${user.id}`);

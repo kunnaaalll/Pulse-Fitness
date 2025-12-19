@@ -7,7 +7,7 @@ async function grantPermissions() {
   
   while (attempts < maxRetries) {
     const client = await getSystemClient();
-    const appUser = process.env.SPARKY_FITNESS_APP_DB_USER;
+    const appUser = process.env.PULSE_FITNESS_APP_DB_USER;
     
     try {
       log('info', `Ensuring permissions for role: ${appUser} (Attempt ${attempts + 1}/${maxRetries})`);

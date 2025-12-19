@@ -73,7 +73,7 @@ const NewReleaseDialog: React.FC<NewReleaseDialogProps> = ({
           <AlertDialogTitle>New Version Available: {releaseInfo.version}</AlertDialogTitle>
           <AlertDialogDescription asChild>
             <div>
-              <p>A new version of SparkyFitness is available!</p>
+              <p>A new version of PulseFitness is available!</p>
               <p>Published: {new Date(releaseInfo.publishedAt).toLocaleDateString()}</p>
               <div className="mt-4 p-2 border rounded max-h-60 overflow-y-auto">
                 <h3 className="font-semibold mb-2">Release Notes:</h3>

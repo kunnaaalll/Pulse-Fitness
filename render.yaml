@@ -5,44 +5,44 @@ services:
     env: node
     plan: free
     buildCommand: cd server && npm install
-    startCommand: cd server && node SparkyFitnessServer.js
+    startCommand: cd server && node PulseFitnessServer.js
     envVars:
-      - key: SPARKY_FITNESS_SERVER_PORT
+      - key: PULSE_FITNESS_SERVER_PORT
         value: 10000
-      - key: SPARKY_FITNESS_FRONTEND_URL
+      - key: PULSE_FITNESS_FRONTEND_URL
         sync: false # Set in dashboard to your Vercel URL
       - key: GARMIN_MICROSERVICE_URL
         fromService:
           type: web
           name: pulsefitness-garmin
           property: url
-      - key: SPARKY_FITNESS_DB_HOST
+      - key: PULSE_FITNESS_DB_HOST
         fromDatabase:
           name: pulse-db
           property: host
-      - key: SPARKY_FITNESS_DB_PORT
+      - key: PULSE_FITNESS_DB_PORT
         fromDatabase:
           name: pulse-db
           property: port
-      - key: SPARKY_FITNESS_DB_NAME
+      - key: PULSE_FITNESS_DB_NAME
         fromDatabase:
           name: pulse-db
           property: database
-      - key: SPARKY_FITNESS_DB_USER
+      - key: PULSE_FITNESS_DB_USER
         fromDatabase:
           name: pulse-db
           property: user
-      - key: SPARKY_FITNESS_DB_PASSWORD
+      - key: PULSE_FITNESS_DB_PASSWORD
         fromDatabase:
           name: pulse-db
           property: password
       - key: JWT_SECRET
         generateValue: true
-      - key: SPARKY_FITNESS_API_ENCRYPTION_KEY
+      - key: PULSE_FITNESS_API_ENCRYPTION_KEY
         generateValue: true
       # Add other keys manually in dashboard: 
       # PERPLEXITY_API_KEY, WITHINGS_CLIENT_ID, WITHINGS_CLIENT_SECRET, 
-      # GARMIN_USERNAME, GARMIN_PASSWORD, SPARKY_FITNESS_ADMIN_EMAIL
+      # GARMIN_USERNAME, GARMIN_PASSWORD, PULSE_FITNESS_ADMIN_EMAIL
 
   # Python Garmin Service
   - type: web

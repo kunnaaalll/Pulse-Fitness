@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { UserLoggingLevel, error, info, warn, debug } from "@/utils/logging";
 import { apiCall } from "@/services/api";
 import { CoachResponse, FoodOption, NutritionData } from "@/services/Chatbot/Chatbot_types";
-import SparkyAIService from "@/components/SparkyAIService";
+import PulseAIService from "@/components/PulseAIService";
 import { fileToBase64, saveMessageToHistory, clearHistory } from "@/services/Chatbot/Chatbot_utils";
 import { processFoodInput, addFoodOption } from "@/services/Chatbot/Chatbot_FoodHandler";
 import { processExerciseInput } from "@/services/Chatbot/Chatbot_ExerciseHandler";
@@ -12,7 +12,7 @@ import { processMeasurementInput } from "@/services/Chatbot/Chatbot_MeasurementH
 import { processWaterInput } from "@/services/Chatbot/Chatbot_WaterHandler";
 import { processChatInput } from "@/services/Chatbot/Chatbot_ChatHandler";
 
-const SparkyNutritionCoach = forwardRef<any, { userLoggingLevel: UserLoggingLevel; formatDateInUserTimezone: (date: string | Date, formatStr?: string) => string; energyUnit: 'kcal' | 'kJ'; convertEnergy: (value: number, fromUnit: 'kcal' | 'kJ', toUnit: 'kcal' | 'kJ') => number; getEnergyUnitString: (unit: 'kcal' | 'kJ') => string }>(({ userLoggingLevel, formatDateInUserTimezone, energyUnit, convertEnergy, getEnergyUnitString }, ref) => {
+const PulseNutritionCoach = forwardRef<any, { userLoggingLevel: UserLoggingLevel; formatDateInUserTimezone: (date: string | Date, formatStr?: string) => string; energyUnit: 'kcal' | 'kJ'; convertEnergy: (value: number, fromUnit: 'kcal' | 'kJ', toUnit: 'kcal' | 'kJ') => number; getEnergyUnitString: (unit: 'kcal' | 'kJ') => string }>(({ userLoggingLevel, formatDateInUserTimezone, energyUnit, convertEnergy, getEnergyUnitString }, ref) => {
   const { t } = useTranslation();
 
 
@@ -133,7 +133,7 @@ const SparkyNutritionCoach = forwardRef<any, { userLoggingLevel: UserLoggingLeve
     }
   };
 
-  const sparkyAIService = new SparkyAIService(energyUnit, convertEnergy, getEnergyUnitString); // Instantiate SparkyAIService with preferences
+  const pulseAIService = new PulseAIService(energyUnit, convertEnergy, getEnergyUnitString); // Instantiate PulseAIService with preferences
 
   const handleUserInput = async (input: string, imageFile: File | null = null, transactionId: string): Promise<CoachResponse> => {
     try {
@@ -142,8 +142,8 @@ const SparkyNutritionCoach = forwardRef<any, { userLoggingLevel: UserLoggingLeve
         imageData = await fileToBase64(imageFile);
       }
 
-      // Use SparkyAIService to process the message
-      const aiResponse = await sparkyAIService.processMessage(input);
+      // Use PulseAIService to process the message
+      const aiResponse = await pulseAIService.processMessage(input);
 
       let parsedResponse: { intent: string; data: any; response?: string; entryDate?: string };
       try {
@@ -177,7 +177,7 @@ const SparkyNutritionCoach = forwardRef<any, { userLoggingLevel: UserLoggingLeve
             info(userLoggingLevel, 'Food not found in DB, requesting AI options...');
             const { foodName, unit, mealType, quantity, entryDate } = foodResponse.metadata;
 
-            // Request food options from AI via SparkyAIService
+            // Request food options from AI via PulseAIService
             const foodOptions = await callAIForFoodOptions(foodName, unit);
 
             if (foodOptions.length > 0) {
@@ -247,8 +247,8 @@ const SparkyNutritionCoach = forwardRef<any, { userLoggingLevel: UserLoggingLeve
       // Construct the specific message for food option generation
       const userMessageContent = `GENERATE_FOOD_OPTIONS:${foodName} in ${unit}`;
 
-      // Use SparkyAIService to process the message for food options
-      const aiResponse = await sparkyAIService.processMessage(userMessageContent);
+      // Use PulseAIService to process the message for food options
+      const aiResponse = await pulseAIService.processMessage(userMessageContent);
 
       if (!aiResponse || !aiResponse.content) {
         error(userLoggingLevel, '❌ [Nutrition Coach] No content received from AI for food options.');
@@ -385,6 +385,6 @@ const SparkyNutritionCoach = forwardRef<any, { userLoggingLevel: UserLoggingLeve
   return null; // This component doesn't render anything
 });
 
-SparkyNutritionCoach.displayName = 'SparkyNutritionCoach';
+PulseNutritionCoach.displayName = 'PulseNutritionCoach';
 
-export default SparkyNutritionCoach;
+export default PulseNutritionCoach;

@@ -190,10 +190,10 @@ class DocumentationService {
         category: 'settings'
       },
       {
-        id: 'sparky-ai',
-        name: 'Sparky AI Assistant',
+        id: 'pulse-ai',
+        name: 'Pulse AI Assistant',
         description: 'AI-powered nutrition assistant with food recognition and guidance',
-        component: 'SparkyChat',
+        component: 'PulseChat',
         permissions: [],
         category: 'ai'
       }

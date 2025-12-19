@@ -219,7 +219,7 @@ const ExternalProviderList: React.FC<ExternalProviderListProps> = ({
                   <p className="text-sm text-muted-foreground col-span-2">
                     Note: Garmin Connect integration is tested with few metrics only. Ensure your Docker Compose is updated to include Garmin section.
                     <br />
-                    Sparky Fitness does not store your Garmin email or password. They are used only during login to obtain secure tokens.
+                    Pulse Fitness does not store your Garmin email or password. They are used only during login to obtain secure tokens.
                   </p>                  
                 </>
               )}

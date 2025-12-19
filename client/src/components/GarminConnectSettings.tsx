@@ -286,7 +286,7 @@ const GarminConnectSettings: React.FC<GarminConnectSettingsProps> = ({ onStatusC
   
       <TooltipWarning warningMsg={"Garmin Connect integration is tested with few metrics only. Ensure your Docker Compose is updated to include Garmin section."} />
       <p className="text-sm text-muted-foreground">
-        Sparky Fitness does not store your Garmin email or password. They are used only during login to obtain secure tokens.
+        Pulse Fitness does not store your Garmin email or password. They are used only during login to obtain secure tokens.
       </p>
       {!garminStatus.isLinked && !showGarminMfaInput && !initialClientState && ( // Show login form if not linked and not in MFA
         <form onSubmit={(e) => { e.preventDefault(); handleGarminLogin(); }} className="space-y-4">

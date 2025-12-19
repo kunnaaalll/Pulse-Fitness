@@ -2,15 +2,15 @@ const { log } = require('../config/logging');
 
 function runPreflightChecks() {
   const requiredEnvVars = [
-    'SPARKY_FITNESS_DB_HOST',
-    'SPARKY_FITNESS_DB_NAME',
-    'SPARKY_FITNESS_DB_USER',
-    'SPARKY_FITNESS_DB_PASSWORD',            
-    'SPARKY_FITNESS_APP_DB_USER',
-    'SPARKY_FITNESS_APP_DB_PASSWORD',
-    'SPARKY_FITNESS_FRONTEND_URL',
+    'PULSE_FITNESS_DB_HOST',
+    'PULSE_FITNESS_DB_NAME',
+    'PULSE_FITNESS_DB_USER',
+    'PULSE_FITNESS_DB_PASSWORD',            
+    'PULSE_FITNESS_APP_DB_USER',
+    'PULSE_FITNESS_APP_DB_PASSWORD',
+    'PULSE_FITNESS_FRONTEND_URL',
     'JWT_SECRET',
-    'SPARKY_FITNESS_API_ENCRYPTION_KEY'
+    'PULSE_FITNESS_API_ENCRYPTION_KEY'
   ];
 
   const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);

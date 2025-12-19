@@ -176,7 +176,7 @@ const FamilyAccessManager = () => {
         
         const statusMessage = foundUserId 
           ? "Family access granted successfully" 
-          : `Access invitation sent to ${formData.family_email}. They'll have access once they create a SparkyFitness account.`;
+          : `Access invitation sent to ${formData.family_email}. They'll have access once they create a PulseFitness account.`;
         
         toast({
           title: "Success",
@@ -280,7 +280,7 @@ const FamilyAccessManager = () => {
                   disabled={!!editingAccess}
                 />
                 <p className="text-xs text-muted-foreground mt-1">
-                  They'll get access once they create a SparkyFitness account (if they don't have one already)
+                  They'll get access once they create a PulseFitness account (if they don't have one already)
                 </p>
               </div>
 

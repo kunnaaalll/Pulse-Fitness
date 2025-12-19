@@ -71,7 +71,7 @@ async function clearOldChatHistory(authenticatedUserId) {
   }
 }
 
-async function getSparkyChatHistory(authenticatedUserId, targetUserId) {
+async function getPulseChatHistory(authenticatedUserId, targetUserId) {
   try {
     const history = await chatRepository.getChatHistoryByUserId(targetUserId);
     return history;
@@ -81,7 +81,7 @@ async function getSparkyChatHistory(authenticatedUserId, targetUserId) {
   }
 }
 
-async function getSparkyChatHistoryEntry(authenticatedUserId, id) {
+async function getPulseChatHistoryEntry(authenticatedUserId, id) {
   try {
     const entryOwnerId = await chatRepository.getChatHistoryEntryOwnerId(id, authenticatedUserId);
     if (!entryOwnerId) {
@@ -95,7 +95,7 @@ async function getSparkyChatHistoryEntry(authenticatedUserId, id) {
   }
 }
 
-async function updateSparkyChatHistoryEntry(authenticatedUserId, id, updateData) {
+async function updatePulseChatHistoryEntry(authenticatedUserId, id, updateData) {
   try {
     const entryOwnerId = await chatRepository.getChatHistoryEntryOwnerId(id);
     if (!entryOwnerId) {
@@ -115,7 +115,7 @@ async function updateSparkyChatHistoryEntry(authenticatedUserId, id, updateData)
   }
 }
 
-async function deleteSparkyChatHistoryEntry(authenticatedUserId, id) {
+async function deletePulseChatHistoryEntry(authenticatedUserId, id) {
   try {
     const entryOwnerId = await chatRepository.getChatHistoryEntryOwnerId(id);
     if (!entryOwnerId) {
@@ -135,7 +135,7 @@ async function deleteSparkyChatHistoryEntry(authenticatedUserId, id) {
   }
 }
 
-async function clearAllSparkyChatHistory(authenticatedUserId) {
+async function clearAllPulseChatHistory(authenticatedUserId) {
   try {
     await chatRepository.clearAllChatHistory(authenticatedUserId);
     return { message: 'All chat history cleared successfully.' };
@@ -145,7 +145,7 @@ async function clearAllSparkyChatHistory(authenticatedUserId) {
   }
 }
 
-async function saveSparkyChatHistory(authenticatedUserId, historyData) {
+async function savePulseChatHistory(authenticatedUserId, historyData) {
   try {
     // Ensure the history is saved for the authenticated user
     historyData.user_id = authenticatedUserId;
@@ -186,7 +186,7 @@ async function processChatMessage(messages, serviceConfigId, authenticatedUserId
       ? customCategories.map(cat => `- ${cat.name} (${cat.measurement_type}, ${cat.frequency})`).join('\n')
       : 'None';
 
-    const systemPromptContent = `You are Sparky, an AI nutrition and wellness coach. Your primary goal is to help users track their food, exercise, and measurements, and provide helpful advice and motivation based on their data and general health knowledge.
+    const systemPromptContent = `You are Pulse, an AI nutrition and wellness coach. Your primary goal is to help users track their food, exercise, and measurements, and provide helpful advice and motivation based on their data and general health knowledge.
 
 The current date is ${new Date().toISOString().split('T')[0]}.
 
@@ -621,12 +621,12 @@ module.exports = {
   getActiveAiServiceSetting,
   deleteAiServiceSetting,
   clearOldChatHistory,
-  getSparkyChatHistory,
-  getSparkyChatHistoryEntry,
-  updateSparkyChatHistoryEntry,
-  deleteSparkyChatHistoryEntry,
-  clearAllSparkyChatHistory,
-  saveSparkyChatHistory,
+  getPulseChatHistory,
+  getPulseChatHistoryEntry,
+  updatePulseChatHistoryEntry,
+  deletePulseChatHistoryEntry,
+  clearAllPulseChatHistory,
+  savePulseChatHistory,
   processChatMessage,
   processFoodOptionsRequest, // Add the new function to exports
 };
@@ -647,7 +647,7 @@ async function processFoodOptionsRequest(foodName, unit, authenticatedUserId, se
       throw new Error('API key missing for selected AI service.');
     }
 
-    const systemPrompt = `You are Sparky, an AI nutrition and wellness coach. Your task is to generate minimum 3 realistic food options in JSON format when requested. Respond ONLY with a JSON array of FoodOption objects, including detailed nutritional information (calories, protein, carbs, fat, saturated_fat, polyunsaturated_fat, monounsaturated_fat, trans_fat, cholesterol, sodium, potassium, dietary_fiber, sugars, vitamin_a, vitamin_c, calcium, iron). **CRITICAL: Always provide estimated nutritional details for each food option. Do NOT default to 0 for any nutritional field if an estimation can be made.** Do NOT include any other text.
+    const systemPrompt = `You are Pulse, an AI nutrition and wellness coach. Your task is to generate minimum 3 realistic food options in JSON format when requested. Respond ONLY with a JSON array of FoodOption objects, including detailed nutritional information (calories, protein, carbs, fat, saturated_fat, polyunsaturated_fat, monounsaturated_fat, trans_fat, cholesterol, sodium, potassium, dietary_fiber, sugars, vitamin_a, vitamin_c, calcium, iron). **CRITICAL: Always provide estimated nutritional details for each food option. Do NOT default to 0 for any nutritional field if an estimation can be made.** Do NOT include any other text.
 **CRITICAL: When a unit is specified in the request (e.g., 'GENERATE_FOOD_OPTIONS:apple in piece'), ensure the \`serving_unit\` in the generated \`FoodOption\` objects matches the requested unit exactly, if it's a common and logical unit for that food. If not, provide a common and realistic serving unit.**`;
 
     const messages = [

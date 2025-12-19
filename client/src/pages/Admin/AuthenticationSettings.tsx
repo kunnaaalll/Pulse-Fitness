@@ -97,13 +97,13 @@ const AuthenticationSettings: React.FC = () => {
             <div>
               <strong>{t('admin.authenticationSettings.loginManagement.emergencyFailSafe', 'Emergency Fail-Safe:')}</strong> {t('admin.authenticationSettings.loginManagement.emergencyFailSafeDescription', 'If you are ever locked out of your account, you can force email/password login to be enabled by setting the following environment variable on your server and restarting it:')}
               <code className="font-mono bg-gray-200 dark:bg-gray-700 p-1 rounded flex items-center">
-                SPARKY_FITNESS_FORCE_EMAIL_LOGIN=true
+                PULSE_FITNESS_FORCE_EMAIL_LOGIN=true
                 <Button
                   variant="ghost"
                   size="icon"
                   className="ml-2 h-5 w-5"
                   onClick={() => {
-                    navigator.clipboard.writeText('SPARKY_FITNESS_FORCE_EMAIL_LOGIN=true');
+                    navigator.clipboard.writeText('PULSE_FITNESS_FORCE_EMAIL_LOGIN=true');
                     toast({ title: t('copied', 'Copied!'), description: t('admin.authenticationSettings.loginManagement.envVarCopied', 'Environment variable copied to clipboard.') });
                   }}
                 >

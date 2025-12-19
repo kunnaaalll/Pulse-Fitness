@@ -9,8 +9,8 @@
     "admin": "Admin"
   },
   "aboutDialog": {
-    "title": "About SparkyFitness",
-    "description1": "SparkyFitness: Built for Families. Powered by AI. Track food, fitness, water, and health — together.",
+    "title": "About PulseFitness",
+    "description1": "PulseFitness: Built for Families. Powered by AI. Track food, fitness, water, and health — together.",
     "applicationVersion": "Application Version: ",
     "joinDiscord": "Join our community on Discord: ",
     "discordLink": "discord.gg/vcnMT5cPEA",
@@ -602,7 +602,7 @@
       "idTokenSignedAlg": "ID Token Signed Alg",
       "userinfoSignedAlg": "Userinfo Signed Alg",
       "requestTimeout": "Request Timeout (ms)",
-      "redirectUriInfo": "The Redirect URI for your OIDC provider should be: SPARKY_FITNESS_FRONTEND_URL/oidc-callback",
+      "redirectUriInfo": "The Redirect URI for your OIDC provider should be: PULSE_FITNESS_FRONTEND_URL/oidc-callback",
       "redirectUriCopied": "Redirect URI copied to clipboard.",
       "localhostWarning": "Ensure your OIDC provider allows localhost or your local IP for development.",
       "proxyWarning": "If using a proxy like Nginx Proxy Manager, ensure the following headers are configured:",

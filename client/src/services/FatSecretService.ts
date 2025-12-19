@@ -180,7 +180,7 @@ export const getFatSecretNutrients = async (foodId: string, providerId: string) 
     console.error("Network error during FatSecret nutrient lookup via proxy:", error);
     toast({
       title: "Error",
-      description: "Network error during FatSecret nutrient lookup. Please ensure your SparkyFitnessServer is running.",
+      description: "Network error during FatSecret nutrient lookup. Please ensure your PulseFitnessServer is running.",
       variant: "destructive",
     });
     return null;

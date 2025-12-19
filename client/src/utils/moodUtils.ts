@@ -1,4 +1,4 @@
-// SparkyFitnessFrontend/src/utils/moodUtils.ts
+// PulseFitnessFrontend/src/utils/moodUtils.ts
 
 export const getMoodDisplay = (moodValue: number | null): { emoji: string, label: string } => {
   if (moodValue === null) return { emoji: '😐', label: 'Neutral' }; // Default for null mood

@@ -7,7 +7,7 @@ const { log } = require('../config/logging');
 const { logAdminAction } = require('../services/authService'); // Import logAdminAction
 
 // Middleware to ensure only admins can access these routes
-// This will be enhanced later to prioritize SPARKY_FITNESS_ADMIN_EMAIL
+// This will be enhanced later to prioritize PULSE_FITNESS_ADMIN_EMAIL
 router.use(authenticate);
 router.use(isAdmin);
 
@@ -32,7 +32,7 @@ router.delete('/users/:userId', async (req, res, next) => {
       return res.status(404).json({ error: 'User not found.' });
     }
 
-    if (user.email === process.env.SPARKY_FITNESS_ADMIN_EMAIL) {
+    if (user.email === process.env.PULSE_FITNESS_ADMIN_EMAIL) {
       return res.status(403).json({ error: 'Cannot delete the primary admin user.' });
     }
 
@@ -64,7 +64,7 @@ router.put('/users/:userId/status', async (req, res, next) => {
       return res.status(404).json({ error: 'User not found.' });
     }
 
-    if (user.email === process.env.SPARKY_FITNESS_ADMIN_EMAIL) {
+    if (user.email === process.env.PULSE_FITNESS_ADMIN_EMAIL) {
       return res.status(403).json({ error: 'Cannot change status of the primary admin user.' });
     }
 
@@ -96,7 +96,7 @@ router.put('/users/:userId/role', async (req, res, next) => {
       return res.status(404).json({ error: 'User not found.' });
     }
 
-    if (user.email === process.env.SPARKY_FITNESS_ADMIN_EMAIL && role !== 'admin') {
+    if (user.email === process.env.PULSE_FITNESS_ADMIN_EMAIL && role !== 'admin') {
       return res.status(403).json({ error: 'Cannot change role of the primary admin user from admin.' });
     }
 

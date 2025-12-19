@@ -10,7 +10,7 @@ const authMiddleware = require('../middleware/authMiddleware'); // Import the en
 router.get('/authorize', authMiddleware.authenticate, async (req, res) => {
     try {
         const userId = req.userId; // Assuming user ID is available from authentication
-        const baseUrl = process.env.SPARKY_FITNESS_FRONTEND_URL || 'http://localhost:8080';
+        const baseUrl = process.env.PULSE_FITNESS_FRONTEND_URL || 'http://localhost:8080';
         const redirectUri = `${baseUrl}/withings/callback`;
         const authorizationUrl = await withingsService.getAuthorizationUrl(userId, redirectUri);
         res.json({ authUrl: authorizationUrl });
@@ -47,7 +47,7 @@ router.post('/callback', async (req, res) => {
         // containing the userId, which can be decrypted/verified here.
         const userId = state; // The userId was passed in the state parameter
 
-        const tokenExchangeResult = await withingsService.exchangeCodeForTokens(userId, code, `${process.env.SPARKY_FITNESS_FRONTEND_URL}/withings/callback`, state);
+        const tokenExchangeResult = await withingsService.exchangeCodeForTokens(userId, code, `${process.env.PULSE_FITNESS_FRONTEND_URL}/withings/callback`, state);
 
         if (tokenExchangeResult.success) {
             res.status(200).json({ message: 'Withings account linked successfully.' });

@@ -7,7 +7,7 @@ const { pipeline } = require('stream/promises');
 const { log } = require('../config/logging');
 const { getRawOwnerPool, endPool, resetPool } = require('../db/poolManager');
 const backupSettingsRepository = require('../models/backupSettingsRepository');
-const { configureSessionMiddleware } = require('../SparkyFitnessServer'); // Import the session configuration function
+const { configureSessionMiddleware } = require('../PulseFitnessServer'); // Import the session configuration function
 
 const BACKUP_DIR = process.env.BACKUP_DIR || path.join(__dirname, '../backup');
 const UPLOADS_BASE_DIR = path.join(__dirname, '../uploads');
@@ -52,9 +52,9 @@ async function performBackup(isManual = false) {
   }
 
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const dbBackupFileName = `sparkyfitness_db_backup_${timestamp}.sql.gz`;
-  const uploadsBackupFileName = `sparkyfitness_uploads_backup_${timestamp}.tar.gz`;
-  const fullBackupFileName = `sparkyfitness_full_backup_${timestamp}.tar.gz`;
+  const dbBackupFileName = `pulsefitness_db_backup_${timestamp}.sql.gz`;
+  const uploadsBackupFileName = `pulsefitness_uploads_backup_${timestamp}.tar.gz`;
+  const fullBackupFileName = `pulsefitness_full_backup_${timestamp}.tar.gz`;
 
   const dbBackupPath = path.join(BACKUP_DIR, dbBackupFileName);
   const uploadsBackupPath = path.join(BACKUP_DIR, uploadsBackupFileName);
@@ -63,13 +63,13 @@ async function performBackup(isManual = false) {
   try {
     log('info', 'Starting database backup...');
     const pgDumpArgs = [
-      '-h', process.env.SPARKY_FITNESS_DB_HOST,
-      '-p', process.env.SPARKY_FITNESS_DB_PORT,
-      '-U', process.env.SPARKY_FITNESS_DB_USER,
-      '-d', process.env.SPARKY_FITNESS_DB_NAME,
+      '-h', process.env.PULSE_FITNESS_DB_HOST,
+      '-p', process.env.PULSE_FITNESS_DB_PORT,
+      '-U', process.env.PULSE_FITNESS_DB_USER,
+      '-d', process.env.PULSE_FITNESS_DB_NAME,
     ];
     const pgDump = spawn('pg_dump', pgDumpArgs, {
-      env: { PGPASSWORD: process.env.SPARKY_FITNESS_DB_PASSWORD, ...process.env },
+      env: { PGPASSWORD: process.env.PULSE_FITNESS_DB_PASSWORD, ...process.env },
     });
     const gzip = zlib.createGzip();
     const output = fs.createWriteStream(dbBackupPath);
@@ -127,7 +127,7 @@ async function applyRetentionPolicy() {
   const files = await fsp.readdir(BACKUP_DIR);
 
   for (const file of files) {
-    if (file.startsWith('sparkyfitness_full_backup_') && file.endsWith('.tar.gz')) {
+    if (file.startsWith('pulsefitness_full_backup_') && file.endsWith('.tar.gz')) {
       const filePath = path.join(BACKUP_DIR, file);
       const stats = await fsp.stat(filePath);
       const fileAgeMs = now.getTime() - stats.mtime.getTime();
@@ -163,8 +163,8 @@ async function performRestore(backupFilePath) {
     log('info', 'Combined backup archive extracted.');
 
     const extractedFiles = await fsp.readdir(tempRestoreDir);
-    const dbDumpFile = extractedFiles.find(f => f.startsWith('sparkyfitness_db_backup_') && f.endsWith('.sql.gz'));
-    const uploadsTarFile = extractedFiles.find(f => f.startsWith('sparkyfitness_uploads_backup_') && f.endsWith('.tar.gz'));
+    const dbDumpFile = extractedFiles.find(f => f.startsWith('pulsefitness_db_backup_') && f.endsWith('.sql.gz'));
+    const uploadsTarFile = extractedFiles.find(f => f.startsWith('pulsefitness_uploads_backup_') && f.endsWith('.tar.gz'));
 
     if (!dbDumpFile || !uploadsTarFile) {
       throw new Error('Combined backup archive does not contain expected database dump or uploads tar file.');
@@ -180,14 +180,14 @@ async function performRestore(backupFilePath) {
     log('info', 'Closed database connection pool.');
 
     // Terminate all other connections to the database
-    const terminateConnectionsCommand = `SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '${process.env.SPARKY_FITNESS_DB_NAME}' AND pid <> pg_backend_pid();`;
-    await executeCommand(`psql -h ${process.env.SPARKY_FITNESS_DB_HOST} -p ${process.env.SPARKY_FITNESS_DB_PORT} -U ${process.env.SPARKY_FITNESS_DB_USER} -d postgres -c "${terminateConnectionsCommand}"`, { env: { PGPASSWORD: process.env.SPARKY_FITNESS_DB_PASSWORD, ...process.env } });
+    const terminateConnectionsCommand = `SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '${process.env.PULSE_FITNESS_DB_NAME}' AND pid <> pg_backend_pid();`;
+    await executeCommand(`psql -h ${process.env.PULSE_FITNESS_DB_HOST} -p ${process.env.PULSE_FITNESS_DB_PORT} -U ${process.env.PULSE_FITNESS_DB_USER} -d postgres -c "${terminateConnectionsCommand}"`, { env: { PGPASSWORD: process.env.PULSE_FITNESS_DB_PASSWORD, ...process.env } });
     log('info', 'Terminated active database connections.');
 
     // Drop and recreate database to ensure a clean state
-    const dbEnv = { PGPASSWORD: process.env.SPARKY_FITNESS_DB_PASSWORD, ...process.env };
-    const dropDbCommand = `dropdb -h ${process.env.SPARKY_FITNESS_DB_HOST} -p ${process.env.SPARKY_FITNESS_DB_PORT} -U ${process.env.SPARKY_FITNESS_DB_USER} ${process.env.SPARKY_FITNESS_DB_NAME}`;
-    const createDbCommand = `createdb -h ${process.env.SPARKY_FITNESS_DB_HOST} -p ${process.env.SPARKY_FITNESS_DB_PORT} -U ${process.env.SPARKY_FITNESS_DB_USER} ${process.env.SPARKY_FITNESS_DB_NAME}`;
+    const dbEnv = { PGPASSWORD: process.env.PULSE_FITNESS_DB_PASSWORD, ...process.env };
+    const dropDbCommand = `dropdb -h ${process.env.PULSE_FITNESS_DB_HOST} -p ${process.env.PULSE_FITNESS_DB_PORT} -U ${process.env.PULSE_FITNESS_DB_USER} ${process.env.PULSE_FITNESS_DB_NAME}`;
+    const createDbCommand = `createdb -h ${process.env.PULSE_FITNESS_DB_HOST} -p ${process.env.PULSE_FITNESS_DB_PORT} -U ${process.env.PULSE_FITNESS_DB_USER} ${process.env.PULSE_FITNESS_DB_NAME}`;
     await executeCommand(dropDbCommand, { env: dbEnv });
     await executeCommand(createDbCommand, { env: dbEnv });
     log('info', 'Database wiped and recreated.');
@@ -209,10 +209,10 @@ async function performRestore(backupFilePath) {
     // 5. Restore database
     log('info', 'Restoring database from dump...');
     const psqlArgs = [
-      '-h', process.env.SPARKY_FITNESS_DB_HOST,
-      '-p', process.env.SPARKY_FITNESS_DB_PORT,
-      '-U', process.env.SPARKY_FITNESS_DB_USER,
-      '-d', process.env.SPARKY_FITNESS_DB_NAME,
+      '-h', process.env.PULSE_FITNESS_DB_HOST,
+      '-p', process.env.PULSE_FITNESS_DB_PORT,
+      '-U', process.env.PULSE_FITNESS_DB_USER,
+      '-d', process.env.PULSE_FITNESS_DB_NAME,
     ];
     const psql = spawn('psql', psqlArgs, { env: dbEnv });
     const gunzip = zlib.createGunzip();

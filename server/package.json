@@ -1,9 +1,9 @@
 {
-  "name": "sparkyfitnessserver",
+  "name": "pulsefitness-server",
   "version": "0.15.9.8",
-  "main": "SparkyFitnessServer.js",
+  "main": "PulseFitnessServer.js",
   "scripts": {
-    "start": "nodemon --watch . --watch routes --watch services --watch models SparkyFitnessServer.js",
+    "start": "nodemon --watch . --watch routes --watch services --watch models PulseFitnessServer.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

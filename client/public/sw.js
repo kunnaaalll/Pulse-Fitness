@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sparky-fitness-cache-v1';
+const CACHE_NAME = 'pulse-fitness-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',

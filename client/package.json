@@ -1,8 +1,8 @@
 {
-  "name": "sparkyfitnessfrontend",
+  "name": "pulsefitness-frontend",
   "private": true,
   "version": "0.15.9.8",
-  "homepage": "https://github.com/CodeWithCJ/SparkyFitness",
+  "homepage": "https://github.com/CodeWithCJ/PulseFitness",
   "type": "module",
   "scripts": {
     "dev": "vite",

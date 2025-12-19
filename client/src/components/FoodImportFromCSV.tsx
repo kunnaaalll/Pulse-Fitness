@@ -185,8 +185,8 @@ const ImportFromCSV = ({ onSave }: ImportFromCSVProps) => {
   const handleDownloadSample = () => {
     const sampleData = [
       {
-        name: "Sparky Sample Food",
-        brand: "Sparky Sample Brand",
+        name: "Pulse Sample Food",
+        brand: "Pulse Sample Brand",
         is_custom: "TRUE",
         shared_with_public: "",
         is_quick_food: "FALSE",

@@ -3,9 +3,9 @@ import { CoachResponse, FoodOption } from './Chatbot_types'; // Import types
 import { debug, info, warn, error, UserLoggingLevel } from '@/utils/logging'; // Import logging utility
 import { apiCall } from '../api'; // Import apiCall
 
-import SparkyAIService from '@/components/SparkyAIService'; // Import SparkyAIService
+import PulseAIService from '@/components/PulseAIService'; // Import PulseAIService
 
-const sparkyAIService = new SparkyAIService(); // Create an instance of SparkyAIService
+const pulseAIService = new PulseAIService(); // Create an instance of PulseAIService
 // Function to process food input
 export const processFoodInput = async (data: {
   food_name: string;

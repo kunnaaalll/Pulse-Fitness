@@ -56,12 +56,12 @@ const ForgotPassword = () => {
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
             <img
-              src="/images/SparkyFitness.png"
-              alt="SparkyFitness Logo"
+              src="/images/PulseFitness.png"
+              alt="PulseFitness Logo"
               className="h-10 w-10 mr-2"
             />
             <CardTitle className="text-2xl font-bold text-gray-900 dark:text-gray-300">
-              SparkyFitness
+              PulseFitness
             </CardTitle>
           </div>
           <CardDescription>

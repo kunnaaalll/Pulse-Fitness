@@ -35,7 +35,7 @@ export const loadChatHistory = async (autoClearHistory: string): Promise<Message
   const params = new URLSearchParams({
     autoClearHistory,
   });
-  const data = await apiCall(`/chat/sparky-chat-history?${params.toString()}`, {
+  const data = await apiCall(`/chat/pulse-chat-history?${params.toString()}`, {
     method: 'GET',
   });
   return (data || []).map((item: any) => {

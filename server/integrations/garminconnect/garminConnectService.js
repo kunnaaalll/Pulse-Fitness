@@ -114,7 +114,7 @@ async function handleGarminTokens(userId, tokensB64) {
         log('error', `Error handling Garmin tokens for user ${userId}:`, error.message);
         let errorMessage = `Failed to handle Garmin tokens: ${error.message}`;
         if (error.message.includes('Invalid key length')) {
-            errorMessage = `Failed to handle Garmin tokens: Encryption key (SPARKY_FITNESS_API_ENCRYPTION_KEY) has an invalid length. Expected 64 hex characters or 44 Base64 characters. Update your environment variable and try again.`;
+            errorMessage = `Failed to handle Garmin tokens: Encryption key (PULSE_FITNESS_API_ENCRYPTION_KEY) has an invalid length. Expected 64 hex characters or 44 Base64 characters. Update your environment variable and try again.`;
         }
         throw new Error(errorMessage);
     }
