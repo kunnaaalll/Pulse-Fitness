@@ -123,14 +123,41 @@ const PulseChatInterface = () => {
 
   const loadActiveAIServiceSetting = async () => {
     try {
-      const setting = await getActiveAiServiceSetting();
+      let setting = await getActiveAiServiceSetting();
+      
+      // Client-side fallback: If no setting is returned from the API, 
+      // create a synthetic "System Default" setting to allow the UI to proceed.
+      // The backend handles the actual "system_default_perplexity" logic.
+      if (!setting) {
+        setting = {
+          id: 'system_default_perplexity',
+          service_name: 'Pulse AI (System)',
+          service_type: 'perplexity',
+          custom_url: '',
+          system_prompt: 'You are Pulse, an AI nutrition and wellness coach.',
+          is_active: true,
+          model_name: 'sonar-pro'
+        };
+      }
+      
       setActiveAIServiceSetting(setting);
     } catch (err) {
       console.error('Error loading active AI service setting:', err);
+      // Even on error, set the default to allow the UI to attempt communication
+      setActiveAIServiceSetting({
+          id: 'system_default_perplexity',
+          service_name: 'Pulse AI (System)',
+          service_type: 'perplexity',
+          custom_url: '',
+          system_prompt: 'You are Pulse, an AI nutrition and wellness coach.',
+          is_active: true,
+          model_name: 'sonar-pro'
+        });
+      
       toast({
-        title: "Error",
-        description: "Failed to load active AI service setting. Please configure it in settings.",
-        variant: "destructive",
+        title: "Using Default AI",
+        description: "Could not load custom settings. Switched to system default.",
+        variant: "default",
       });
     }
   };
