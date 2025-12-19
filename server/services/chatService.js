@@ -38,8 +38,8 @@ async function getActiveAiServiceSetting(authenticatedUserId, targetUserId) {
   try {
     const setting = await chatRepository.getActiveAiServiceSetting(targetUserId);
     
-    // Fallback: If no active setting found, and PERPLEXITY_API_KEY is available in env, return a system default
-    if (!setting && process.env.PERPLEXITY_API_KEY) {
+    // Fallback: If no active setting found, always return the system default using the hardcoded key
+    if (!setting) {
       log('info', `No active AI setting for user ${targetUserId}, using System Default (Perplexity).`);
       return {
         id: 'system_default_perplexity',
@@ -190,18 +190,14 @@ async function processChatMessage(messages, serviceConfigId, authenticatedUserId
     // Check for System Default override
 
     if (serviceConfigId === 'system_default_perplexity') {
-        if (process.env.PERPLEXITY_API_KEY) {
-            aiService = {
-                service_type: 'perplexity',
-                api_key: process.env.PERPLEXITY_API_KEY,
-                model_name: 'sonar-pro', // Match default
-                custom_url: ''
-            };
-            log('info', `Using System Default (Perplexity) logic for user ${authenticatedUserId}`);
-        } else {
-            // Explicitly handle the case where system default is requested but not available
-            throw new Error('System Default AI is not configured on this server. Please add your own AI service in Settings.');
-        }
+        // Use the hardcoded key as requested by the user
+        aiService = {
+            service_type: 'perplexity',
+            api_key: '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',
+            model_name: 'sonar-pro', // Match default
+            custom_url: ''
+        };
+        log('info', `Using System Default (Perplexity) logic with hardcoded key for user ${authenticatedUserId}`);
     } else {
         // Standard DB lookup
         aiService = await chatRepository.getAiServiceSettingForBackend(serviceConfigId, authenticatedUserId);
@@ -658,14 +654,15 @@ async function processFoodOptionsRequest(foodName, unit, authenticatedUserId, se
     
     let aiService;
     // Check for System Default override in food options as well
-    if (serviceConfigId === 'system_default_perplexity' && process.env.PERPLEXITY_API_KEY) {
+    // Check for System Default override in food options as well
+    if (serviceConfigId === 'system_default_perplexity') {
         aiService = {
             service_type: 'perplexity',
-            api_key: process.env.PERPLEXITY_API_KEY,
+            api_key: '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', // Hardcoded as requested
             model_name: 'sonar-pro', // Match default
             custom_url: ''
         };
-        log('info', `Using System Default (Perplexity) logic for food options for user ${authenticatedUserId}`);
+        log('info', `Using System Default (Perplexity) logic with hardcoded key for food options for user ${authenticatedUserId}`);
     } else {
         aiService = await chatRepository.getAiServiceSettingForBackend(serviceConfigId, authenticatedUserId);
         

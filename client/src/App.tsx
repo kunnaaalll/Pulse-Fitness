@@ -10,8 +10,6 @@ import { ActiveUserProvider } from "@/contexts/ActiveUserContext"; // Import Act
 import AppContent from "@/components/AppContent";
 import DraggableChatbotButton from "@/components/DraggableChatbotButton";
 import AboutDialog from "@/components/AboutDialog";
-import NewReleaseDialog from "@/components/NewReleaseDialog";
-import AppSetup from '@/components/AppSetup';
 import axios from 'axios';
 import { Toaster } from "@/components/ui/toaster"; // Import the Toaster component
 import { Routes, Route } from 'react-router-dom';
@@ -27,8 +25,6 @@ const queryClient = new QueryClient();
 const App = () => {
   const { t } = useTranslation();
   const [showAboutDialog, setShowAboutDialog] = useState(false);
-  const [latestRelease, setLatestRelease] = useState(null);
-  const [showNewReleaseDialog, setShowNewReleaseDialog] = useState(false);
   const [appVersion, setAppVersion] = useState('unknown');
 
   useEffect(() => {
@@ -45,10 +41,6 @@ const App = () => {
   }, []);
 
 
-  const handleDismissRelease = (version: string) => {
-    localStorage.setItem('dismissedReleaseVersion', version);
-    setShowNewReleaseDialog(false);
-  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -57,10 +49,7 @@ const App = () => {
         <ChatbotVisibilityProvider>
           <WaterContainerProvider> {/* Wrap with WaterContainerProvider */}
             <ActiveUserProvider> {/* Wrap with ActiveUserProvider */}
-              <AppSetup
-                setLatestRelease={setLatestRelease}
-                setShowNewReleaseDialog={setShowNewReleaseDialog}
-              />
+
               <Routes>
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
@@ -72,12 +61,7 @@ const App = () => {
               <DraggableChatbotButton />
               <PulseChat />
               <AboutDialog isOpen={showAboutDialog} onClose={() => setShowAboutDialog(false)} version={appVersion} />
-              <NewReleaseDialog
-                isOpen={showNewReleaseDialog}
-                onClose={() => setShowNewReleaseDialog(false)}
-                releaseInfo={latestRelease}
-                onDismissForVersion={handleDismissRelease}
-              />
+
               <Toaster /> {/* Render the Toaster component */}
             </ActiveUserProvider>
           </WaterContainerProvider>
