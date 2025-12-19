@@ -521,6 +521,7 @@ const PulseChatInterface = () => {
       
       {/* Sticky Input Area */}
       {/* Sticky Input Area */}
+      {/* Sticky Input Area */}
       <div className="p-4 border-t border-white/5 bg-black/60 backdrop-blur-xl relative z-20 shrink-0 mb-safe">
         {/* Image Preview */}
         {selectedImage && (
@@ -540,9 +541,9 @@ const PulseChatInterface = () => {
             </Button>
           </div>
         )}
-        <div className="flex gap-3 items-end">
-          <div className="flex-1 relative group">
-             {/* Attachment Button Inside Input */}
+        <div className="flex gap-3 items-center">
+          <div className="flex-1 relative group h-14">
+             {/* Attachment Button Inside Input - Using inset-y-0 for robust centering */}
             <input
               type="file"
               accept="image/*"
@@ -552,9 +553,9 @@ const PulseChatInterface = () => {
             />
             <label 
               htmlFor="image-upload" 
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer p-2 rounded-full hover:bg-white/10 transition-colors"
+              className="absolute inset-y-0 left-0 flex items-center pl-4 z-10 cursor-pointer"
             >
-                <div className="text-slate-400 hover:text-purple-400 transition-colors">
+                <div className="p-2 rounded-full hover:bg-white/10 transition-colors text-slate-400 hover:text-purple-400">
                   <ImageIcon className="h-5 w-5" />
                 </div>
             </label>
