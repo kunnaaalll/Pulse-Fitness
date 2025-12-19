@@ -188,14 +188,20 @@ async function processChatMessage(messages, serviceConfigId, authenticatedUserId
     let aiService;
     
     // Check for System Default override
-    if (serviceConfigId === 'system_default_perplexity' && process.env.PERPLEXITY_API_KEY) {
-        aiService = {
-            service_type: 'perplexity',
-            api_key: process.env.PERPLEXITY_API_KEY,
-            model_name: 'sonar-pro', // Match default
-            custom_url: ''
-        };
-        log('info', `Using System Default (Perplexity) logic for user ${authenticatedUserId}`);
+    // Check for System Default override
+    if (serviceConfigId === 'system_default_perplexity') {
+        if (process.env.PERPLEXITY_API_KEY) {
+            aiService = {
+                service_type: 'perplexity',
+                api_key: process.env.PERPLEXITY_API_KEY,
+                model_name: 'sonar-pro', // Match default
+                custom_url: ''
+            };
+            log('info', `Using System Default (Perplexity) logic for user ${authenticatedUserId}`);
+        } else {
+            // Explicitly handle the case where system default is requested but not available
+            throw new Error('System Default AI is not configured on this server. Please add your own AI service in Settings.');
+        }
     } else {
         // Standard DB lookup
         aiService = await chatRepository.getAiServiceSettingForBackend(serviceConfigId, authenticatedUserId);
