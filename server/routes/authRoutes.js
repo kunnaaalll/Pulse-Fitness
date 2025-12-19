@@ -76,8 +76,8 @@ router.post('/login', loginValidation, async (req, res, next) => {
 
     res.cookie('token', authResult.token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: true, // Always true for cross-site access
+      sameSite: 'none',
       maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
     res.status(200).json({ message: 'Login successful', userId: authResult.userId, role: authResult.role });
@@ -178,8 +178,8 @@ router.post('/register', registerValidation, async (req, res, next) => {
     const { userId, token } = await authService.registerUser(email, password, full_name);
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: true,
+      sameSite: 'none',
       maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
     res.status(201).json({ message: 'User registered successfully', userId, role: 'user' });
@@ -581,8 +581,8 @@ router.post('/mfa/verify/totp', authenticate, mfaValidation, async (req, res, ne
 
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: true,
+        sameSite: 'none',
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
       });
       res.status(200).json({ message: 'TOTP verified and login successful.', userId: user.id, email: user.email, role: user.role, token });
@@ -672,8 +672,8 @@ router.post('/mfa/verify-email-code', authenticate, mfaValidation, async (req, r
       const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: "30d" });
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: true,
+        sameSite: 'none',
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
       });
       res.status(200).json({ message: 'Email MFA code verified. Login successful.', userId: user.id, email: user.email, role: user.role, token });
@@ -714,8 +714,8 @@ router.post('/mfa/verify-recovery-code', verifyRecoveryCodeValidation, async (re
       const token = jwt.sign({ userId: targetUserId }, JWT_SECRET, { expiresIn: "30d" });
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: true,
+        sameSite: 'none',
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
       });
       res.status(200).json({ message: 'Recovery code verified. Login successful.', userId: targetUserId, role: user.role, token });
@@ -772,8 +772,8 @@ router.get('/magic-link-login', async (req, res, next) => {
 
     res.cookie('token', authResult.token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: true,
+      sameSite: 'none',
       maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
     // Respond with a success message and token to the frontend
