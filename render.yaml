@@ -12,10 +12,7 @@ services:
       - key: PULSE_FITNESS_FRONTEND_URL
         sync: false # Set in dashboard to your Vercel URL
       - key: GARMIN_MICROSERVICE_URL
-        fromService:
-          type: web
-          name: pulsefitness-garmin
-          property: url
+        value: http://pulsefitness-garmin:10000
       - key: PULSE_FITNESS_DB_HOST
         fromDatabase:
           name: pulse-db
