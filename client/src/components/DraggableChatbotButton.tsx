@@ -36,9 +36,12 @@ const DraggableChatbotButton: React.FC = () => {
         try {
           const services = await getAIServices();
           setHasAiProvider(services && services.length > 0);
-        } catch (error) {
+        } catch (error: any) {
           console.error("Failed to fetch AI services:", error);
-          setHasAiProvider(false);
+          // If 403 (unauthorized) or network error, we might still want to show the button 
+          // to let the user try to open it and handle the error/auth there.
+          // Or at least default to true so it doesn't disappear.
+          setHasAiProvider(true); 
         }
       } else if (!loading && !user) { // If loading is false and no user, ensure AI provider is false
         setHasAiProvider(false);
