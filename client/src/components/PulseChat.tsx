@@ -28,11 +28,26 @@ const PulseChat = () => {
     }
   }, [loading]); // Add loading to dependency array
 
+  // Create a safe default empty object if user is undefined to prevent crashes
+  // during logout/loading transitions
+  const safeUser = user || { id: '' };
+
   useEffect(() => {
     checkEnabledServices();
   }, [checkEnabledServices]);
 
-  if (!hasEnabledServices) {
+  // If loading, don't render anything yet, but don't return null if we want to default to visible
+  if (loading) {
+    return null; 
+  }
+
+  // Always render the Sheet if we're not loading. 
+  // We let PulseChatInterface handle the "No Enabled Services" state gracefully 
+  // by showing a setup message instead of hiding the entire chat window.
+  // This lines up with our fix for the button visibility.
+  const shouldRender = true; 
+
+  if (!shouldRender) {
     return null;
   }
 

@@ -20,6 +20,7 @@ import ResetPassword from '@/pages/ResetPassword';
 import WithingsCallback from '@/pages/WithingsCallback';
 import ExternalProviderSettings from '@/components/ExternalProviderSettings'; // Import ExternalProviderSettings
 import Auth from '@/components/Auth'; // Import the Auth component
+import PulseChat from "@/components/PulseChat";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +70,7 @@ const App = () => {
                 <Route path="*" element={<AppContent onShowAboutDialog={() => setShowAboutDialog(true)} />} />
               </Routes>
               <DraggableChatbotButton />
+              <PulseChat />
               <AboutDialog isOpen={showAboutDialog} onClose={() => setShowAboutDialog(false)} version={appVersion} />
               <NewReleaseDialog
                 isOpen={showNewReleaseDialog}
