@@ -512,10 +512,10 @@ const DailyProgress = ({
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <div className="text-xl font-bold text-gray-900 dark:text-gray-50">
+                <div className="text-xl font-bold text-foreground">
                   {displayedCaloriesRemaining}
                 </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">
+                <div className="text-xs text-muted-foreground">
                   {t('exercise.dailyProgress.remaining', 'remaining')} {getEnergyUnitString(energyUnit)}
                 </div>
               </div>
@@ -525,24 +525,24 @@ const DailyProgress = ({
           {/* Energy Breakdown - Compact */}
           <div className="grid grid-cols-3 gap-2 text-center text-sm">
             <div className="space-y-1">
-              <div className="flex items-center justify-center text-lg font-bold text-green-600">
+              <div className="flex items-center justify-center text-lg font-bold text-green-600 dark:text-green-400">
                 <Utensils className="w-4 h-4 mr-1" />
                 {displayedDailyIntakeCalories}
               </div>
-              <div className="text-xs text-gray-500">{t('exercise.dailyProgress.eaten', 'eaten')} {getEnergyUnitString(energyUnit)}</div>
+              <div className="text-xs text-muted-foreground">{t('exercise.dailyProgress.eaten', 'eaten')} {getEnergyUnitString(energyUnit)}</div>
             </div>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="space-y-1">
-                    <div className="flex items-center justify-center text-lg font-bold text-orange-600">
+                    <div className="flex items-center justify-center text-lg font-bold text-orange-600 dark:text-orange-400">
                       <Flame className="w-4 h-4 mr-1" />
                       {displayedTotalCaloriesBurned}
                     </div>
-                    <div className="text-xs text-gray-500">{t('exercise.dailyProgress.burned', 'burned')} {getEnergyUnitString(energyUnit)}</div>
+                    <div className="text-xs text-muted-foreground">{t('exercise.dailyProgress.burned', 'burned')} {getEnergyUnitString(energyUnit)}</div>
                   </div>
                 </TooltipTrigger>
-                <TooltipContent className="bg-black text-white text-xs p-2 rounded-md">
+                <TooltipContent className="bg-popover text-popover-foreground border border-border text-xs p-2 rounded-md">
                   <p>{t('exercise.dailyProgress.burnedEnergyBreakdown', 'Burned Energy Breakdown:')}</p>
                   {exerciseCalories > 0 && (
                     <p>{t('exercise.dailyProgress.otherExerciseCalories', 'Other Exercise: {{exerciseCalories}} {{energyUnit}}', { exerciseCalories: displayedExerciseCalories, energyUnit: getEnergyUnitString(energyUnit) })}</p>
@@ -561,11 +561,11 @@ const DailyProgress = ({
               </Tooltip>
             </TooltipProvider>
             <div className="space-y-1 ">
-              <div className="flex items-center justify-center text-lg font-bold dark:text-slate-400 text-gray-900">
+              <div className="flex items-center justify-center text-lg font-bold text-foreground">
                 <Flag className="w-4 h-4 mr-1" />
                 {displayedDailyGoalCalories}
               </div>
-              <div className="text-xs dark:text-slate-400 text-gray-500 ">
+              <div className="text-xs text-muted-foreground">
                 {t('exercise.dailyProgress.goal', 'goal')} {getEnergyUnitString(energyUnit)}
               </div>
             </div>

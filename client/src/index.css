@@ -80,10 +80,14 @@
     @apply h-full w-full overflow-x-hidden;
     background-color: #0f0518;
     /* Match bottom gradient color */
+    overscroll-behavior: none;
+    /* Prevent rubber banding/white gaps */
   }
 
   body {
     @apply bg-background text-foreground h-full w-full m-0 p-0 overflow-x-hidden;
+    overscroll-behavior: none;
+    /* Prevent rubber banding */
     /* Global Mesh Gradient Background - Deep & Neon */
     background:
       radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.4) 0%, transparent 50%),
